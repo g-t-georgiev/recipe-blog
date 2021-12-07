@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import cssClasses from '../Auth.module.css';
+import '../Auth.css';
 
 function Register() {
 
@@ -13,25 +13,25 @@ function Register() {
 
     return (
         <section>
-            <h2 className={cssClasses['form-title']}>Register</h2>
-            <form className={cssClasses['auth-form']} onSubmit={submitHandler}>
-                <div className={cssClasses['form-row']}>
-                    <input className={cssClasses['form-input']} type="username" name="username" id="username" placeholder="Username" />
+            <h2 className="form-title">Register</h2>
+            <form className="auth-form" onSubmit={submitHandler}>
+                <div className="form-row">
+                    <input className="form-input" type="username" name="username" id="username" placeholder="Username" />
                 </div>
-                <div className={cssClasses['form-row']}>
-                    <input className={cssClasses['form-input']} type="email" name="email" id="email" placeholder="Email" />
+                <div className="form-row">
+                    <input className="form-input" type="email" name="email" id="email" placeholder="Email" />
                 </div>
-                <div className={cssClasses['form-row']}>
-                    <input className={cssClasses['form-input']} type="password" name="password" id="password" placeholder="Password" />
+                <div className="form-row">
+                    <input className="form-input" type="password" name="password" id="password" placeholder="Password" />
                 </div>
-                <div className={cssClasses['form-row']}>
-                    <input className={cssClasses['form-input']} type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" />
+                <div className="form-row">
+                    <input className="form-input" type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" />
                 </div>
-                <div className={cssClasses['form-row']}>
-                    <button className={cssClasses['form-button']} type="submit">Sign up</button>
+                <div className="form-row">
+                    <button className="form-button" type="submit">Sign up</button>
                 </div>
-                <div className={cssClasses['form-row']}>
-                    <span className={cssClasses['form-footer']}>
+                <div className="form-row">
+                    <span className="form-rooter">
                         Already a member?
                         <Link to="/auth/login">Sign in.</Link>
                     </span>
