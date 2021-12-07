@@ -1,0 +1,16 @@
+.layout-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.main-content {
+    padding: 2%;
+    background-color: white;
+}
+
+@media screen and (min-width: 802px) {
+    .layout-wrapper {
+        width: 90%;
+    }
+}
