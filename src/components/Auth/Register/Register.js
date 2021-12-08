@@ -31,7 +31,7 @@ function Register() {
                     <button className="form-button" type="submit">Sign up</button>
                 </div>
                 <div className="form-row">
-                    <span className="form-rooter">
+                    <span className="form-footer">
                         Already a member?
                         <Link to="/auth/login">Sign in.</Link>
                     </span>
