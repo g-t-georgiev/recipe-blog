@@ -1,46 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Ephesis&display=swap');
+
 .site-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-bottom: 2%;
-    border-bottom-style: solid;
-    border-bottom-width: .1%;
-    border-bottom-color: lightgray;
 }
 
 .site-header-title {
-    width: 30%;
+    width: 50%;
+    padding: 2%;
     color: orangered;
-    font-size: 1.5rem;
+    font-family: 'Ephesis', cursive;
+    font-weight: 400;
+    font-size: 2.5rem;
+    text-align: left;
+}
+
+.toggle-navigation-button {
+    width: 100%;
+    padding: 2%;
+    border: 0;
+    background-color: transparent;
+    font-size: 1.2rem;
+    text-align: right;
+    cursor: pointer;
 }
 
 .site-navigation {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30%;
+    width: 50%;
+}
+
+.opened {
+    display: block;
+}
+
+.closed {
+    display: none;
+}
+
+.site-navigation-links {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f0f5f1;
 }
 
 .site-navigation-link {
-    display: inline-block;
+    display: block;
+    width: 100%;
     padding: 3%;
-    margin: 0 1%;
-    border-bottom-style: solid;
-    border-bottom-width: .1%;
-    border-color: transparent;
     color: black;
-    font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     text-decoration: none;
 }
 
 .site-navigation-link:hover {
-    color: blue;
-    border-color: blue;
+    color: orangered;
 }
 
 .link-active {
-    color: blue;
-    border-color: blue;
+    color: orangered;
+}
+
+@media screen and (min-width: 930px) {
+    .site-header-title {
+        width: 30%;
+        font-size: 3rem;
+    }
+
+    .toggle-navigation-button {
+        display: none;
+    }
+
+    .site-navigation {
+        width: 30%;
+        text-align: left;
+    }
+
+    .closed {
+        display: block;
+    }
+
+    .site-navigation-links {
+        position: static;
+        width: 100%;
+        height: auto;
+        background-color: transparent;
+    }
+
+    .site-navigation-link {
+        display: inline-block;
+        width: auto;
+        margin-left: 1%;
+        margin-right: 1%;
+        border: none;
+        font-size: .9rem;
+        background-color: transparent;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .site-header-title {
+        padding: 1%;
+        font-size: 3.5rem;
+    }
+
+    .site-navigation {
+        padding: 1%;
+    }
 }
