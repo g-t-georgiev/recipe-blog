@@ -47,17 +47,7 @@
 }
 
 .form-footer {
-    display: flex;
-    justify-content: space-between;
-    width: 90%;
-    margin: 0 auto;
-    padding: 2% .5%;
-    font-size: 1.1rem;
-}
-
-.form-footer a {
-    text-decoration: none;
-    color: orangered;
+    font-size: smaller;
 }
 
 @media screen and (min-width: 602px) and (max-width: 801px) {
