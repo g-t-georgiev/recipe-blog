@@ -14,7 +14,7 @@ function Login() {
     return (
         <section>
             <h2 className="form-title">Login</h2>
-            <form className="auth-form" onSubmit={submitHandler}>
+            <form className="auth-form" autoComplete="off" onSubmit={submitHandler}>
                 <div className="form-row">
                     <input className="form-input" type="email" name="email" id="email" placeholder="Email" />
                 </div>
@@ -24,9 +24,9 @@ function Login() {
                 <div className="form-row">
                     <button className="form-button" type="submit">Sign in</button>
                 </div>
-                <div className="form-row">
-                    <span className="form-footer">
-                        Dont't have an accout?
+                <div className="form-row form-footer">
+                    <span>
+                        Dont't have an accout? &nbsp;
                         <Link to="/auth/register">Sign up.</Link>
                     </span>
                 </div>

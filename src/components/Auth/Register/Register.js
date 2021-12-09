@@ -14,7 +14,7 @@ function Register() {
     return (
         <section>
             <h2 className="form-title">Register</h2>
-            <form className="auth-form" onSubmit={submitHandler}>
+            <form className="auth-form" autoComplete="off" onSubmit={submitHandler}>
                 <div className="form-row">
                     <input className="form-input" type="username" name="username" id="username" placeholder="Username" />
                 </div>
@@ -30,9 +30,9 @@ function Register() {
                 <div className="form-row">
                     <button className="form-button" type="submit">Sign up</button>
                 </div>
-                <div className="form-row">
-                    <span className="form-footer">
-                        Already a member?
+                <div className="form-row form-footer">
+                    <span>
+                        Already a member? &nbsp;
                         <Link to="/auth/login">Sign in.</Link>
                     </span>
                 </div>
