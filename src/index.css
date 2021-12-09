@@ -11,3 +11,8 @@ body {
 	padding: 1%;
 	background-color: #f0f5f1;
 }
+
+a {
+    text-decoration: none;
+    color: orangered;
+}
