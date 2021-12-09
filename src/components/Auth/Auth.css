@@ -1,5 +1,5 @@
 .auth-form {
-    width: 100%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -50,33 +50,45 @@
     font-size: smaller;
 }
 
-@media screen and (min-width: 602px) and (max-width: 801px) {
-    .auth-form {
-        width: 80%;
-        margin: 0 auto;
-    }
-}
-
-@media screen and (min-width: 802px) and (max-width: 901px) {
+@media screen and (min-width: 402px) {
     .auth-form {
         width: 60%;
     }
 }
 
-@media screen and (min-width: 902px) and (max-width: 1001px) {
+@media screen and (min-width: 502px) {
     .auth-form {
         width: 50%;
     }
 }
 
-@media screen and (min-width: 1002px) and (max-width: 1501px) {
+@media screen and (min-width: 602px) {
+    .auth-form {
+        width: 45%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (min-width: 802px) {
     .auth-form {
         width: 40%;
     }
 }
 
-@media screen and (min-width: 1502px) {
+@media screen and (min-width: 902px) {
+    .auth-form {
+        width: 35%;
+    }
+}
+
+@media screen and (min-width: 1002px) {
     .auth-form {
         width: 30%;
+    }
+}
+
+@media screen and (min-width: 1502px) {
+    .auth-form {
+        width: 25%;
     }
 }
