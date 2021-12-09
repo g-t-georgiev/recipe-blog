@@ -49,7 +49,7 @@
 }
 
 .form-footer {
-    font-size: smaller;
+    font-size: .9rem;
 }
 
 @media screen and (min-width: 402px) {
