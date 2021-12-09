@@ -13,7 +13,7 @@ function Register() {
 
     return (
         <section>
-            <h2 className="form-title">Register</h2>
+            <h2 className="form-title">Create an account</h2>
             <form className="auth-form" autoComplete="off" onSubmit={submitHandler}>
                 <div className="form-row">
                     <input className="form-input" type="username" name="username" id="username" placeholder="Username" />

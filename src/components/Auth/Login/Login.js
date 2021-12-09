@@ -13,7 +13,7 @@ function Login() {
     
     return (
         <section>
-            <h2 className="form-title">Login</h2>
+            <h2 className="form-title">Sign in to your account</h2>
             <form className="auth-form" autoComplete="off" onSubmit={submitHandler}>
                 <div className="form-row">
                     <input className="form-input" type="email" name="email" id="email" placeholder="Email" />
