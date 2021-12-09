@@ -26,7 +26,7 @@ function Login() {
                 </div>
                 <div className="form-row form-footer">
                     <span>
-                        Dont't have an accout? &nbsp;
+                        Dont't have an account? &nbsp;
                         <Link to="/auth/register">Sign up.</Link>
                     </span>
                 </div>
