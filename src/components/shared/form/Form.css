@@ -1,0 +1,61 @@
+.form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.form-title {
+    margin: 3% 0 2%;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.form-row {
+    margin: 0 0 3%;
+}
+
+.form-row:last-child {
+    margin-bottom: 0;
+}
+
+@media screen and (min-width: 402px) {
+    .form {
+        width: 60%;
+    }
+}
+
+@media screen and (min-width: 502px) {
+    .form {
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 602px) {
+    .form {
+        width: 45%;
+    }
+}
+
+@media screen and (min-width: 802px) {
+    .form {
+        width: 40%;
+    }
+}
+
+@media screen and (min-width: 902px) {
+    .form {
+        width: 35%;
+    }
+}
+
+@media screen and (min-width: 1002px) {
+    .form {
+        width: 30%;
+    }
+}
+
+@media screen and (min-width: 1502px) {
+    .form {
+        width: 25%;
+    }
+}
