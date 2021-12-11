@@ -1,9 +1,9 @@
 const validationConditionChecker = {
     minLength(checkedValue, conditionValue) {
-        return checkedValue >= conditionValue;
+        return checkedValue.length >= conditionValue;
     },
     maxLength(checkedValue, conditionValue) {
-        return checkedValue <= conditionValue;
+        return checkedValue.length <= conditionValue;
     },
     isRequired(checkedValue, conditionValue) {
         return conditionValue && checkedValue.length > 0;
@@ -19,7 +19,7 @@ const validationConditionChecker = {
 }
 
 function formInputValidator (checkedValue, validationConditions) {
-    const validationResult = { valid: true, reasons: '' };
+    const validationResult = { valid: true, reasons: [] };
 
     if (typeof(validationConditions) !== 'object' && !(validationConditions instanceof Object)) {
         return validationResult;
@@ -31,11 +31,10 @@ function formInputValidator (checkedValue, validationConditions) {
         
         if (!isValid) {
             validationResult.valid = false;
-            validationResult.reasons += message + ' ';
+            validationResult.reasons.push(message);
         }
     }
 
-    validationResult.reasons = validationResult.reasons.trim();
     return validationResult;
 }
 
