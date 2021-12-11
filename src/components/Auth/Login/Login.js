@@ -7,10 +7,7 @@ import FormButton from '../../shared/form/form-button/FormButton';
 
 function Login() {
 
-    const submitHandler = function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-
+    const submitHandler = function () {
         console.log('Submitted');
     }
 
