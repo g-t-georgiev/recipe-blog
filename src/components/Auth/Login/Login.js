@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 
-import '../Auth.css';
+import Form from '../../shared/form/Form';
+import FormFooter from '../../shared/form/form-footer/FormFooter';
+import FormInput from '../../shared/form/form-input/FormInput';
+import FormButton from '../../shared/form/form-button/FormButton';
 
 function Login() {
 
@@ -10,27 +13,18 @@ function Login() {
 
         console.log('Submitted');
     }
-    
+
     return (
         <section>
-            <h2 className="form-title">Sign in to your account</h2>
-            <form className="auth-form" autoComplete="off" onSubmit={submitHandler}>
-                <div className="form-row">
-                    <input className="form-input" type="email" name="email" id="email" placeholder="Email" />
-                </div>
-                <div className="form-row">
-                    <input className="form-input" type="password" name="password" id="password" placeholder="Password" />
-                </div>
-                <div className="form-row">
-                    <button className="form-button" type="submit">Sign in</button>
-                </div>
-                <div className="form-row form-footer">
-                    <span>
-                        Not a member yet? &nbsp;
-                        <Link to="/auth/register">Sign up.</Link>
-                    </span>
-                </div>
-            </form>
+            <Form formTitle="Sign in to your account" formSubmitAction={submitHandler}>
+                <FormInput type="email" name="email" placeholder="Enter your email.." />
+                <FormInput type="password" name="password" placeholder="Enter password.." />
+                <FormButton>Sign in</FormButton>
+                <FormFooter>
+                    Not a member yet? &nbsp;
+                    <Link to="/auth/register">Sign up.</Link>
+                </FormFooter>
+            </Form>
         </section>
     );
 }
