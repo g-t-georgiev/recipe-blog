@@ -26,7 +26,7 @@ function formInputValidator (checkedValue, validationConditions) {
     }
 
     for (const condition in validationConditions) {
-        const { conditionValue, message } = condition;
+        const { value: conditionValue, message } = condition;
         const isValid = (validationConditionChecker[condition] ?? validationConditionChecker.default)(checkedValue, conditionValue, condition);
 
         if (!isValid) {
