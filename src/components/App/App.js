@@ -2,10 +2,10 @@ import { Routes, Route } from 'react-router-dom';
 
 import './App.css';
 
-import Header from '../Header/Header';
-import Home from '../Home/Home';
-import Login from '../Auth/Login/Login';
-import Register from '../Auth/Register/Register';
+import Header from '../header/Header';
+import Home from '../home/Home';
+import Login from '../auth/login/Login';
+import Register from '../auth/register/Register';
 
 function App() {
 	return (
