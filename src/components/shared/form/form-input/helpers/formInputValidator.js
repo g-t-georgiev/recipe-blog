@@ -8,6 +8,9 @@ const validationConditionChecker = {
     isRequired(checkedValue, conditionValue) {
         return conditionValue && checkedValue.length > 0;
     },
+    isEmail(checkedValue, regex) {
+        return regex.test(checkedValue);
+    },
     default(checkedValue, conditionValue, condition) {
         console.log('Checked value: ' + checkedValue);
         console.log(`Condition: ${condition}, Value: ${conditionValue}`);
