@@ -1,0 +1,24 @@
+.form-input {
+    width: 90%;
+    padding: 3% 2%;
+    border: 1px solid darkgray;
+    font-size: 1rem;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: black;
+}
+
+.form-input::placeholder {
+    color: darkgray;
+    opacity: 1;
+}
+
+.form-input-validation-message {
+    display: block;
+    width: 90%;
+    padding: 2% 1%;
+    font-size: .9rem;
+    color: red;
+}
