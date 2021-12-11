@@ -40,13 +40,13 @@ function FormInput({ type = 'text', name = '', placeholder = '', validationCondi
         value = value.trim();
 
         const { valid: hasPassedChecks, reasons } = formInputValidator(value, validationConditions);
-        
+
         if (!hasPassedChecks) {
             changeValidationStatusHandler(hasPassedChecks, isValid);
 
             const newError = {
                 field: name,
-                messages: [ ...error.messages, ...reasons.split(' ') ],
+                messages: [ ...error.messages, ...reasons ],
                 visible: isValid
             }
 
@@ -54,6 +54,8 @@ function FormInput({ type = 'text', name = '', placeholder = '', validationCondi
         }
 
     }, [changeValidationStatusHandler, changeErrorStatusHandler, error.messages, isValid, name, validationConditions]);
+
+    console.log(error);
 
     return (
         <div className="form-row">
