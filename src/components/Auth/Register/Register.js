@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 import Form from '../../shared/form/Form';
 import FormFooter from '../../shared/form/form-footer/FormFooter';
@@ -7,13 +7,10 @@ import FormButton from '../../shared/form/form-button/FormButton';
 
 function Register() {
 
-    const submitHandler = function () {
-        console.log('Submitted');
-    }
 
     return (
         <section>
-            <Form formTitle="Create an account" formSubmitAction={submitHandler}>
+            <Form name="registerForm" title="Create an account">
                 <FormInput name="username" placeholder="Enter username.." />
                 <FormInput type="email" name="email" placeholder="Enter email address.." />
                 <FormInput type="password" name="password" placeholder="Enter password.." />
