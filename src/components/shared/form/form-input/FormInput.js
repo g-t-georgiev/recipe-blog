@@ -1,66 +1,62 @@
-import { useState, useCallback } from 'react';
+import { useState, useContext } from 'react';
+
+import { FormContext } from '../Form';
 
 import './FormInput.css';
 
-import formInputValidator from './helpers/formInputValidator';
-
-const initialValidationStatus = false;
-
-const initialErrorState = {
-    field: null,
-    messages: [],
-    visible: false
+const initialFieldStatus = {
+    name: '',
+    value: '',
+    message: '',
+    valid: false,
+    touched: false 
 };
 
-function FormInput({ type = 'text', name = '', placeholder = '', validationConditions = {} }) {
-    const [ isValid, setValidationStatus ] = useState(initialValidationStatus);
-    const [ error, setError ] = useState(initialErrorState);
+function FormInput({ type = 'text', name, placeholder }) {
+    const [field, setField] = useState(initialFieldStatus);
 
-    const changeValidationStatusHandler = useCallback(function (newValidationStatus, oldValidationStatus) {
-        if (newValidationStatus === oldValidationStatus) {
-            return;
+    const form = useContext(FormContext);
+
+    function changeHandler(e) {
+        const currentValue = e.currentTarget.value;
+
+        if (currentValue.length < 4) {
+            setField(status => {
+                return {
+                    ...status,
+                    name,
+                    value: currentValue,
+                    valid: false,
+                    touched: true,
+                    message: `Provided ${name} should be at least 4 characters long.`
+                }
+            });
+
+            form.changeValidationStatus(false);
+        } else {
+            setField(status => {
+                return {
+                    ...status,
+                    name,
+                    value: currentValue,
+                    valid: true,
+                    message: ''
+                }
+            });
+
+            form.changeValidationStatus(true);
         }
-
-        setValidationStatus(newValidationStatus);
-    }, [setValidationStatus]);
-
-    const changeErrorStatusHandler = useCallback(function ({ field = '', messages = [], visible = false }) {
-        setError(errorStatus => {
-            return {
-                ...errorStatus,
-                field,
-                messages,
-                visible
-            }
-        })
-    }, [setError]);
-
-    const changeInputHandler = useCallback(function (e) {
-        let value = e.currentTarget.value;
-        value = value.trim();
-
-        const { valid: hasPassedChecks, reasons } = formInputValidator(value, validationConditions);
-
-        if (!hasPassedChecks) {
-            changeValidationStatusHandler(hasPassedChecks, isValid);
-
-            const newError = {
-                field: name,
-                messages: [ ...error.messages, ...reasons ],
-                visible: isValid
-            }
-
-            changeErrorStatusHandler(newError);
-        }
-
-    }, [changeValidationStatusHandler, changeErrorStatusHandler, error.messages, isValid, name, validationConditions]);
-
-    console.log(error);
+        
+    }
 
     return (
         <div className="form-row">
-            <input className="form-input" type={type} name={name} placeholder={placeholder} onChange={changeInputHandler} />
-            {error.visible && <span className="form-input-validation-message"></span>}
+            <input className="form-input" type={type} name={name} placeholder={placeholder} onChange={changeHandler} />
+            {
+                (!field.valid && field.touched) 
+                && 
+                <span className="form-input-validation-message">{field.message}</span>
+            }
         </div>
     );
 }
