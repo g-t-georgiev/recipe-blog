@@ -1,27 +1,11 @@
-import { useState, useCallback, createContext } from "react";
-
+import { useCallback } from "react";
+import { FormContextProvider } from './FormContext';
 import './Form.css';
+import FormInput from "../form-input/FormInput";
+import FormButton from "../form-button/FormButton";
+import FormFooter from "../form-footer/FormFooter";
 
-export const FormContext = createContext(null);
-
-function FormContextProvider({ children }) {
-    const [valid, setValid] = useState(false);
-
-    const form = {
-        valid,
-        changeValidationStatus(value) {
-            setValid(value);
-        }
-    };
-
-    return (
-        <FormContext.Provider value={form}>
-            {children}
-        </FormContext.Provider>
-    );
-}
-
-function Form({ name, title = 'Fill in the form below', children }) {
+function Form({ name, title = 'Fill in the form below', elements }) {
 
     const submitHandler = useCallback(function (e) {
         e.preventDefault();
@@ -39,7 +23,9 @@ function Form({ name, title = 'Fill in the form below', children }) {
         <FormContextProvider>
             <form className="form" name={name} autoComplete="off" onSubmit={submitHandler}>
                 <legend className="form-title">{title}</legend>
-                {children}
+                {elements.inputs.map(({ id, ...props }) => <FormInput key={id} { ...props} />)}
+                <FormButton {...elements.button} />
+                <FormFooter {...elements.footer} />
             </form>
         </FormContextProvider>
     );
