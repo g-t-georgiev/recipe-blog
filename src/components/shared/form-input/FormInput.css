@@ -1,0 +1,41 @@
+.form-input {
+    width: 90%;
+    padding: 3% 2%;
+    border: 1px solid darkgray;
+    font-size: 1rem;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: black;
+}
+
+.form-input::placeholder {
+    color: darkgray;
+    opacity: 1;
+}
+
+.form-input:required:not(:focus):not(:placeholder-shown):invalid {
+    border-color: red;
+}
+
+.error-message {
+    position: absolute;
+    left: 5%;
+    z-index: 1;
+    display: none;
+    width: 90%;
+    padding: 1%;
+    margin-top: 1%;
+    border: 1px solid red;
+    font-size: .8rem;
+    color: red;
+    background-color: pink;
+}
+.form-input:required:focus:not(:placeholder-shown):invalid ~ .error-message {
+    display: block;
+}
+
+.form-input:required:valid ~ .error-message {
+    display: none;
+}
