@@ -7,8 +7,8 @@ const elements = {
             type: 'text',
             name: 'username',
             placeholder: 'Enter username..',
-            error: 'Username should be between 4 and 15 characters long and could consist of latin letters, digits, hyphens, underscores and dots.',
-            pattern: '[A-Za-z0-9\\-_.]{4,15}',
+            error: 'Username should be between 4 and 15 characters long and could contain letters and digits, as well as, a hyphen, an underscore or a dot. Hyphens, underscores and dots cannot sit next to each other or be at the beginning or in the end of the sequence.',
+            pattern: '^(?=[a-zA-Z0-9._\\-]{4,15}$)(?!.*[_.\\-]{2})[^_.\\-].*[^_.\\-]$',
             required: true
         },
         {
