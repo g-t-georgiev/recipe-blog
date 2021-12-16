@@ -19,6 +19,10 @@
     border-color: red;
 }
 
+.form-input:required:not(:focus):not(:placeholder-shown):valid {
+    border-color: green;
+}
+
 .error-message {
     position: absolute;
     left: 5%;
