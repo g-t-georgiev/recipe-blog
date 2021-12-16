@@ -8,7 +8,7 @@ const elements = {
             name: 'username',
             placeholder: 'Enter username..',
             error: 'Username should be between 4 and 15 characters long and could consist of latin letters, digits, hyphens, underscores and dots.',
-            pattern: '',
+            pattern: '[A-Za-z0-9\\-_.]{4,15}',
             required: true
         },
         {
