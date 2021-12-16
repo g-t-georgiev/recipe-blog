@@ -12,6 +12,7 @@ function FormInput({ error, ...props }) {
     return (
         <div className="form-row">
             <input className="form-input" {...props} />
+            <i className="info-icon">&#33;</i>
             <span className="error-message">{error}</span>
         </div>
     );
