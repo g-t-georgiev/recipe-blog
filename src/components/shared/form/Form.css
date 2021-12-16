@@ -55,8 +55,20 @@
     }
 }
 
-@media screen and (min-width: 1502px) {
+@media screen and (min-width: 1150px) {
+    .form {
+        width: 27%;
+    }
+}
+
+@media screen and (min-width: 1350px) {
     .form {
         width: 25%;
+    }
+}
+
+@media screen and (min-width: 1502px) {
+    .form {
+        width: 23%;
     }
 }
