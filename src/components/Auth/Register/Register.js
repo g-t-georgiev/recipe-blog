@@ -25,8 +25,8 @@ const elements = {
             type: 'password',
             name: 'password',
             placeholder: 'Enter password..',
-            error: 'Password should be between 6 and 15 characters long.',
-            pattern: '',
+            error: 'Password length should be between 6 and 15 characters and should contain at least one letter and/or digit and optionally the following special symbols: @$!%*#?&',
+            pattern: '^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*#?&]{6,15}$',
             required: true
         },
         {
