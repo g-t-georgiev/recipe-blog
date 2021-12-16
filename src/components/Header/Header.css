@@ -31,17 +31,13 @@
     width: 50%;
 }
 
-.opened {
-    display: block;
-}
-
-.closed {
-    display: none;
-}
-
 .site-navigation-links {
     position: absolute;
     z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     top: 0;
     left: 0;
     width: 100%;
@@ -66,6 +62,14 @@
     color: orangered;
 }
 
+.opened {
+    display: flex;
+}
+
+.closed {
+    display: none;
+}
+
 @media screen and (min-width: 930px) {
     .site-header-title {
         width: 30%;
@@ -81,13 +85,9 @@
         text-align: left;
     }
 
-    .closed {
-        display: block;
-    }
-
     .site-navigation-links {
         position: static;
-        width: 100%;
+        flex-direction: row;
         height: auto;
         background-color: transparent;
     }
@@ -100,6 +100,10 @@
         border: none;
         font-size: .9rem;
         background-color: transparent;
+    }
+
+    .closed {
+        display: flex;
     }
 }
 
