@@ -23,23 +23,92 @@
     border-color: green;
 }
 
+.info-icon {
+    position: absolute;
+    top: 25%;
+    right: 10%;
+    display: none;
+    font-style: normal;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .error-message {
     position: absolute;
-    left: 5%;
-    z-index: 1;
+    bottom: 100%;
+    left: 50%;
     display: none;
-    width: 90%;
-    padding: 1%;
-    margin-top: 1%;
-    border: 1px solid red;
+    width: 80%;
+    padding: 2%;
+    border: 2px solid black;
+    border-radius: 5px;
     font-size: .8rem;
-    color: red;
+    color: black;
     background-color: pink;
 }
-.form-input:required:focus:not(:placeholder-shown):invalid ~ .error-message {
+
+.error-message::before {
+    content: ' ';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -8px;
+    border-width: 8px;
+    border-color: transparent;
+    border-top-color: black;
+    border-style: solid;
+}
+
+.form-input:required:not(:placeholder-shown):invalid ~ .info-icon {
+    display: inline-block;
+    color: red;
+}
+
+.info-icon:hover ~ .error-message {
     display: block;
 }
 
-.form-input:required:valid ~ .error-message {
-    display: none;
+@media screen and (min-width: 802px) {
+    .error-message {
+        top: -5px;
+        left: 105%;
+        bottom: 0;
+        width: 70%;
+        font-size: .85rem;
+    }
+
+    .error-message::before {
+        top: 50%;
+        left: -8%;
+        margin: 0;
+        margin-top: -8px;
+        margin-left: 0;
+        border-color: transparent;
+        border-right-color: black;
+    }
+
+    .form-input:required:not(:placeholder-shown):invalid ~ .info-icon {
+        display: none;
+    }
+
+    .form-input:required:focus:not(:placeholder-shown):invalid ~ .error-message {
+        display: block;
+    }
+
+    .form-input:required:valid ~ .error-message {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1704px) {
+    .error-message::before {
+        left: -7%;
+    }
+}
+
+@media screen and (min-width: 1970px) {
+    .error-message::before {
+        left: -6%;
+    }
 }
