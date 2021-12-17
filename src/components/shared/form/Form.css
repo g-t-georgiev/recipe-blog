@@ -4,7 +4,7 @@
 }
 
 .form-title {
-    margin: 3% 0 2%;
+    margin: 3% 0 5%;
     font-size: 1.1rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -12,7 +12,8 @@
 
 .form-row {
     position: relative;
-    margin: 0 0 3%;
+    margin: 0 0 5%;
+    
 }
 
 .form-row:last-child {
@@ -40,6 +41,12 @@
 @media screen and (min-width: 802px) {
     .form {
         width: 40%;
+    }
+
+    .form-row {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 }
 
