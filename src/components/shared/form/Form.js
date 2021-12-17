@@ -200,7 +200,7 @@ function Form({ name, title = 'Fill in the form below' }) {
         <form className="form" name={name} autoComplete="off" onSubmit={submitHandler} onChange={changeHandler}>
             <legend className="form-title">{title}</legend>
             {Object.values(formState.elements.fields).map(field => <FormInput key={field.key} error={field.error} {...field.props} />)}
-            {Object.values(formState.elements.buttons).map((button, i) => <FormButton key={i + 1} {...button} />)}
+            {Object.values(formState.elements.buttons).map((button, i) => <FormButton key={i + 1} disabled={!formState.valid} {...button} />)}
             {<FormFooter {...formState.elements.footer} />}
         </form>
     );
