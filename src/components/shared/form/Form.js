@@ -95,7 +95,7 @@ function Form({ name, title = 'Fill in the form below', elements }) {
 
     const changeHandler = useCallback(function (e) {
         console.log(`${e.target.name} = ${e.target.value}`);
-    });
+    }, []);
 
     return (
         <form className="form" name={name} autoComplete="off" onSubmit={submitHandler} onChange={changeHandler}>
