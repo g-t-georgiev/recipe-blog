@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import { FormContextProvider } from './FormContext';
 import './Form.css';
 import FormInput from "../form-input/FormInput";
 import FormButton from "../form-button/FormButton";
@@ -19,15 +18,17 @@ function Form({ name, title = 'Fill in the form below', elements }) {
         console.log('Registered successfully.');
     }, []);
 
+    const changeHandler = useCallback(function (e) {
+        console.log(`${e.target.name} = ${e.target.value}`);
+    });
+
     return (
-        <FormContextProvider>
-            <form className="form" name={name} autoComplete="off" onSubmit={submitHandler}>
-                <legend className="form-title">{title}</legend>
-                {elements.inputs.map(({ id, ...props }) => <FormInput key={id} { ...props} />)}
-                <FormButton {...elements.button} />
-                <FormFooter {...elements.footer} />
-            </form>
-        </FormContextProvider>
+        <form className="form" name={name} autoComplete="off" onSubmit={submitHandler} onChange={changeHandler}>
+            <legend className="form-title">{title}</legend>
+            {elements.inputs.map(({ id, ...props }) => <FormInput key={id} {...props} />)}
+            <FormButton {...elements.button} />
+            <FormFooter {...elements.footer} />
+        </form>
     );
 }
 
