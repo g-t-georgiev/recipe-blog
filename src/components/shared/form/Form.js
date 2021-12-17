@@ -4,81 +4,152 @@ import FormInput from "../form-input/FormInput";
 import FormButton from "../form-button/FormButton";
 import FormFooter from "../form-footer/FormFooter";
 
-const initialFormState = {
-    valid: false,
-    fields: {
-        username: {
-            id: 1,
-            error: null,
+const usernamePattern = '^(?=[a-zA-Z0-9._\\-]{4,15}$)(?!.*[_.\\-]{2})[^_.\\-].*[^_.\\-]$';
+const emailPattern = '(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])';
+const passwordPattern = '^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{6,15}$';
+
+const fieldSchema = {
+    create(key, error, { type, name, id, placeholder, pattern, required }) {
+        return {
+            key,
+            error,
             props: {
-                type: 'text',
-                name: 'username',
-                id: 'username',
-                placeholder: 'Username',
-                required: true,
-                pattern: '^(?=[a-zA-Z0-9._\\-]{4,15}$)(?!.*[_.\\-]{2})[^_.\\-].*[^_.\\-]$'
+                type,
+                name,
+                id,
+                placeholder,
+                pattern,
+                required
             }
-        },
-        email: {
-            id: 2,
-            error: null,
-            props: {
-                type: 'email',
-                name: 'email',
-                id: 'email',
-                placeholder: 'Email',
-                required: true,
-                pattern: '(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])'
-            }
-        },
-        password: {
-            id: 3,
-            error: null,
-            props: {
-                type: 'password',
-                name: 'password',
-                id: 'password',
-                placeholder: 'Password',
-                required: true,
-                pattern: '^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{6,15}$'
-            }
-        }
-    },
-    buttons: {
-        submit: {
-            type: 'submit',
-            text: 'Submit'
-        }
-    },
-    footer: {
-        span: {
-            text: ''
-        },
-        link: {
-            text: '',
-            to: ''
         }
     }
+}
+
+const initialFormState = {
+    valid: false,
+    name: '',
+    elements: {
+        fields: {
+            loginForm: {
+                email: fieldSchema.create(
+                    1,
+                    null,
+                    {
+                        type: 'email',
+                        name: 'email',
+                        id: 'email',
+                        placeholder: 'Email',
+                        pattern: emailPattern,
+                        required: true
+                    }
+                ),
+                password: fieldSchema.create(
+                    2,
+                    null,
+                    {
+                        type: 'password',
+                        name: 'password',
+                        id: 'password',
+                        placeholder: 'Password',
+                        pattern: passwordPattern,
+                        required: true
+                    }
+                )
+            },
+            registerForm: {
+                username: fieldSchema.create(
+                    1,
+                    null,
+                    {
+                        type: 'username',
+                        name: 'username',
+                        id: 'username',
+                        placeholder: 'Username',
+                        pattern: usernamePattern,
+                        required: true
+                    }
+                ),
+                email: fieldSchema.create(
+                    2,
+                    null,
+                    {
+                        type: 'email',
+                        name: 'email',
+                        id: 'email',
+                        placeholder: 'Email',
+                        pattern: emailPattern,
+                        required: true
+                    }
+                ),
+                password: fieldSchema.create(
+                    3,
+                    null,
+                    {
+                        type: 'password',
+                        name: 'password',
+                        id: 'password',
+                        placeholder: 'Password',
+                        pattern: passwordPattern,
+                        required: true
+                    }
+                )
+            }
+        },
+        buttons: {
+            registerForm: {
+                submit: {
+                    text: 'Sign up',
+                    type: 'submit'
+                }
+            },
+            loginForm: {
+                submit: {
+                    text: 'Sign in',
+                    type: 'submit'
+                }
+            }
+        },
+        footer: {
+            registerForm: {
+                span: {
+                    text: 'Already have an account?'
+                },
+                link: {
+                    text: 'Sign in.',
+                    to: '/auth/login'
+                }
+            },
+            loginForm: {
+                span: {
+                    text: 'Not a member yer?'
+                },
+                link: {
+                    text: 'Sign up.',
+                    to: '/auth/register'
+                }
+            }
+        }
+    }
+
 };
 
-function Form({ name, title = 'Fill in the form below', elements }) {
-    const [ formState, setFormState ] = useState(function () {
-
-        elements.inputs.forEach(function (input) {
-            initialFormState[input.name].props.required = input.required;
-            return;
-        });
-
-        elements.buttons.forEach(function (button) {
-            initialFormState[button.type].text = button.text;
-            return;
-        });
-
-        initialFormState.footer.span.text = elements.footer.span.text;
-        initialFormState.footer.link.to = elements.footer.link.to;
-        initialFormState.footer.link.text = elements.footer.link.text;
-
-        return initialFormState;
+function Form({ name, title = 'Fill in the form below' }) {
+    const [formState, setFormState] = useState(function () {
+        return {
+            name,
+            valid: false,
+            elements: {
+                fields: {
+                    ...initialFormState.elements.fields[name]
+                },
+                buttons: {
+                    ...initialFormState.elements.buttons[name]
+                },
+                footer: {
+                    ...initialFormState.elements.footer[name]
+                }
+            }
+        };
     });
 
     const submitHandler = useCallback(function (e) {
@@ -94,15 +165,43 @@ function Form({ name, title = 'Fill in the form below', elements }) {
     }, []);
 
     const changeHandler = useCallback(function (e) {
-        console.log(`${e.target.name} = ${e.target.value}`);
+        const fieldName = e.target.name;
+        const fieldValue = e.target.value;
+        const fieldPattern = new RegExp(e.target.pattern);
+        const isValid = fieldPattern.test(fieldValue);
+
+        let message = fieldName === 'username' 
+            ? 'Username should be between 4 and 15 characters and can contain letters and digits, as well as hyphen, dot or underscore as a word separator.'
+            : fieldName === 'email'
+            ? 'Email should be in the format: <name>@<host>.'
+            : fieldName === 'password'
+            ? 'Password should be between 6 and 15 characters long and should contain one of the following: a letter, a digit and one of the allowed special symbols: @$!%*#?&'
+            : 'Unknown error.';
+
+        setFormState(state => ({
+            ...state,
+            valid: isValid,
+            elements: {
+                ...state.elements,
+                fields: {
+                    ...state.elements.fields,
+                    [fieldName]: {
+                        ...state.elements.fields[fieldName],
+                        error: isValid
+                            ? null
+                            : message
+                    }
+                }
+            }
+        }));
     }, []);
 
     return (
         <form className="form" name={name} autoComplete="off" onSubmit={submitHandler} onChange={changeHandler}>
             <legend className="form-title">{title}</legend>
-            {formState.fields.map(({ id, props }) => <FormInput key={id} {...props} />)}
-            {formState.buttons.map((button, i) => <FormButton key={i + 1} {...button} />)}
-            <FormFooter {...formState.footer} />
+            {Object.values(formState.elements.fields).map(field => <FormInput key={field.key} error={field.error} {...field.props} />)}
+            {Object.values(formState.elements.buttons).map((button, i) => <FormButton key={i + 1} {...button} />)}
+            {<FormFooter {...formState.elements.footer} />}
         </form>
     );
 }
