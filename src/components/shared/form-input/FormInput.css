@@ -12,9 +12,10 @@
 .form-input {
     width: 100%;
     padding: 3%;
-    border-width: 1px;
+    border-width: 2px;
     border-style: solid;
     border-color: darkgray;
+    border-radius: 5px;
     font-size: 1rem;
     transition: border-color .3s;
 }
@@ -53,8 +54,10 @@
     font-style: normal;
     font-size: 1.1rem;
     font-weight: bold;
-    opacity: 0;
-    /* transition: all 0.7s; */
+}
+
+.info-icon {
+    display: none;
 }
 
 .info-icon:hover {
@@ -87,17 +90,13 @@
     border-style: solid;
 }
 
-.form-input:required:placeholder-shown ~ .info-icon:hover {
-    cursor: text;
-}
-
 .form-input:required:not(:placeholder-shown):invalid ~ .info-icon {
-    opacity: 1;
+    display: inline-block;
     color: red;
 }
 
 .form-input:required:not(:placeholder-shown):valid ~ .info-icon {
-    opacity: 1;
+    display: inline-block;
     color: green;
 }
 
