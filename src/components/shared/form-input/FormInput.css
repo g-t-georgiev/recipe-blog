@@ -25,6 +25,10 @@
     transition: border-color .3s;
 }
 
+.form-input::placeholder {
+    opacity: 0;
+}
+
 .form-input:focus {
     outline: none;
     border-color: black;
@@ -39,15 +43,11 @@
     color: black;
 }
 
-.form-input::placeholder {
-    opacity: 0;
-}
-
-.form-input:required:not(:focus):not(:placeholder-shown):invalid {
+.invalid {
     border-color: red;
 }
 
-.form-input:required:not(:focus):not(:placeholder-shown):valid {
+.valid {
     border-color: green;
 }
 
@@ -62,8 +62,30 @@
     font-weight: bold;
 }
 
+.info-icon::after {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    display: block;
+    width: 80%;
+    padding: 2%;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: .8rem;
+    color: black;
+    background-color: pink;
+}
+
+.info-icon::after {
+    display: none;
+}
+
 .info-icon:hover {
     cursor: pointer;
+}
+
+.info-icon:hover ~ .info-icon::after {
+    display: block;
 }
 
 .info-icon {
@@ -100,33 +122,21 @@
     display: none;
 }
 
-.form-input:required:not(:placeholder-shown):invalid ~ .info-icon {
+.invalid ~ .info-icon {
     display: inline-block;
     color: red;
 }
 
-.form-input:required:not(:placeholder-shown):valid ~ .info-icon {
+.valid ~ .info-icon {
     display: inline-block;
     color: green;
 }
 
-.form-input:required:not(:placeholder-shown):invalid ~ .info-icon:hover ~ .error-message {
-    display: block;
-}
-
-.form-input:required:not(:placeholder-shown):valid ~ .info-icon:hover ~ .error-message {
+.show-message {
     display: block;
 }
 
 @media screen and (min-width: 802px) {
-    .form-input:required:not(:placeholder-shown):invalid ~ .info-icon:hover ~ .error-message {
-        display: none;
-    }
-    
-    .form-input:required:not(:placeholder-shown):valid ~ .info-icon:hover ~ .error-message {
-        display: none;
-    }
-
     .input-field.invalid ~ .error-message {
         display: block;
         position: static;
