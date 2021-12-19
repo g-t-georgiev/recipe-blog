@@ -1,9 +1,12 @@
+import { useFormContext } from '../form/Form';
 import './FormButton.css';
 
-function FormButton({ type = 'submit', disabled = true, text = 'Submit' }) {
+function FormButton({ type = 'submit', text = 'Submit' }) {
+    const formError = useFormContext();
+
     return (
         <div className="form-row">
-            <button className="form-button" type={type} disabled={disabled}>
+            <button className="form-button" type={type} disabled={!formError.has()}>
                 {text}
             </button>
         </div>
