@@ -1,8 +1,27 @@
-import { useState, useCallback } from 'react';
+import { useState, useMemo, useCallback } from 'react';
+import { useFormContext } from '../form/Form';
 import './FormInput.css';
 
-function FormInput({ error, ...props }) {
+function FormInput(props) {
     const [ value, setValue ] = useState('');
+    const [ error, setError ] = useState(null);
+
+    const formError = useFormContext();
+
+    const inputError = useMemo(function () {
+        return {
+            get() {
+                return error;
+            },
+            set(value = '') {
+                setError(value);
+            },
+            has() {
+                return Boolean(error);
+            }
+        };
+    }, [error, setError]);
+
     const changeHandler = useCallback(function (e) {
         setValue(e.target.value);
     }, [setValue]);
