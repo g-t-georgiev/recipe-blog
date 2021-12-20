@@ -71,7 +71,7 @@ function Form({ name, title = 'Fill in the form below', children }) {
         <FormContext.Provider value={{ formError, responseStatusError, loadingStatus }}>
             <form className="form" name={name} autoComplete="off" onSubmit={submitHandler}>
                 <legend className="form-title">{title}</legend>
-                {responseError && <span className="response-error"></span>}
+                {responseStatusError.has() && <span className="response-error"></span>}
                 {children}
             </form>
         </FormContext.Provider>
