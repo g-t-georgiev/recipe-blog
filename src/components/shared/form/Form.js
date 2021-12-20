@@ -7,56 +7,83 @@ export const useFormContext = function () {
     return useContext(FormContext);
 };
 
+const responseStatusInitial = {
+    ok: false,
+    message: ''
+};
+
+const formStatusInitial = {
+    submitted: false,
+    fields: {}
+};
+
 function Form({ name, title = 'Fill in the form below', children }) {
-    const [ isLoading, setLoading ] = useState(false);
-    const [ responseError, setResponseError ] = useState(null);
-    const [ inputError, setInputError ] = useState(null);
+    const [isLoading, setLoadingStatus] = useState(false);
+    const [response, setResponseStatus] = useState(responseStatusInitial);
+    const [status, setStatus] = useState(function () {
+        return children
+            .filter(comp => {
+                return comp.type.name === 'FormInput'
+            })
+            .reduce((status, comp) => {
+                return {
+                    ...status,
+                    fields: {
+                        ...status.fields,
+                        [comp.props.name]: {
+                            value: '',
+                            valid: false,
+                            touched: false,
+                            message: ''
+                        }
+                    }
+                }
+            }, formStatusInitial);
+    });
 
     const loadingStatus = useMemo(function () {
-        return {
-            get() {
-                return isLoading;
-            },
-            set(value = false) {
-                setLoading(value);
-            }
-        };
-    }, [isLoading, setLoading]);
+        return isLoading;
+    }, [isLoading]);
 
-    const responseStatusError = useMemo(function () {
-        return {
-            get() {
-                return responseError;
-            },
-            set(value = '') {
-                setResponseError(value);
-            },
-            has() {
-                return Boolean(responseError);
-            }
-        };
-    }, [responseError, setResponseError]);
+    const responseStatus = useMemo(function () {
+        return response.ok;
+    }, [response]);
 
-    const formError = useMemo(function () {
+    const formStatus = useMemo(function () {
         return {
-            get() {
-                return inputError;
+            get(name) {
+                return status.fields[name];
             },
-            set(value = '') {
-                setInputError(value);
+            valid() {
+                return Object
+                    .keys(status.fields)
+                    .reduce((acc, field) => status.fields[field].valid && acc, true);
             },
-            has() {
-                return Boolean(inputError);
+            set(name, value, valid, message) {
+                setStatus(function (status) {
+                    return {
+                        ...status,
+                        fields: {
+                            ...status.fields,
+                            [name]: {
+                                value,
+                                valid,
+                                touched: true,
+                                message
+                            }
+                        }
+                    };
+                });
             }
-        };
-    }, [inputError, setInputError]);
+        }
+    }, [status, setStatus]);
 
     const submitHandler = useCallback(function (e) {
         e.preventDefault();
         e.stopPropagation();
 
-        const registerForm = e.currentTarget;
-        const formFieldData = Object.fromEntries(new FormData(registerForm));
+        const form = e.currentTarget;
+        const formFieldData = Object.fromEntries(new FormData(form));
 
         console.log(formFieldData);
 
@@ -64,10 +91,10 @@ function Form({ name, title = 'Fill in the form below', children }) {
     }, []);
 
     return (
-        <FormContext.Provider value={{ formError, responseStatusError, loadingStatus }}>
+        <FormContext.Provider value={{ loadingStatus, responseStatus, formStatus }}>
             <form className="form" name={name} autoComplete="off" onSubmit={submitHandler}>
                 <legend className="form-title">{title}</legend>
-                {responseStatusError.has() && <span className="response-error"></span>}
+                {(!isLoading && status.submitted && !response.ok) && <span className="response-error">{response.message}</span>}
                 {children}
             </form>
         </FormContext.Provider>
