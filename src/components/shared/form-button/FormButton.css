@@ -11,3 +11,7 @@
 .form-button:hover {
     cursor: pointer;
 }
+
+.form-button[disabled]:hover {
+    cursor: not-allowed;
+}
