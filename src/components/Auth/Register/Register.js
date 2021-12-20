@@ -7,7 +7,7 @@ function Register() {
     return (
         <section>
             <Form name="registerForm" title="Create an account">
-                <FormInput type="username" name="username" id="username" placeholder="Username" />
+                <FormInput type="text" name="username" id="username" placeholder="Username" />
                 <FormInput type="email" name="email" id="email" placeholder="Email" />
                 <FormInput type="password" name="password" id="password" placeholder="Password" />
                 <FormButton text="Sign up" />
