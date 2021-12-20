@@ -57,9 +57,9 @@ function FormInput(props) {
                         {props.placeholder}
                     </span>
                 </label>
-                <i className="info-icon">{responseStatusError.has() || inputError.has() ? '\u2716' : '\u2713'}</i>
+                <i className="info-icon">{inputError.has() ? '\u2716' : '\u2713'}</i>
             </div>
-            <span className="error-message">{responseStatusError.get() || inputError.get() || 'Looks great.'}</span>
+            <span className="error-message">{inputError.get() || 'Looks great.'}</span>
         </div>
     );
 }
