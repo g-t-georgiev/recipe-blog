@@ -12,21 +12,34 @@ export const useFormContext = function () {
 };
 
 function Form({ name, title = 'Fill in the form below', children }) {
-    const [ error, setError ] = useState(null);
+    const [ isLoading, setLoading ] = useState(false);
+    const [ responseError, setResponseError ] = useState(null);
+    const [ inputError, setInputError ] = useState(null);
 
     const formError = useMemo(function () {
         return {
             get() {
-                return error;
+                return inputError;
             },
             set(value = '') {
-                setError(value);
+                setInputError(value);
             },
             has() {
-                return Boolean(error);
+                return Boolean(inputError);
             }
         };
-    }, [error, setError]);
+    }, [inputError, setInputError]);
+
+    const loadingStatus = useMemo(function () {
+        return {
+            get() {
+                return isLoading;
+            },
+            set(value = false) {
+                setLoading(value);
+            }
+        }
+    }, [isLoading, setLoading]);
 
     const submitHandler = useCallback(function (e) {
         e.preventDefault();
@@ -41,9 +54,10 @@ function Form({ name, title = 'Fill in the form below', children }) {
     }, []);
 
     return (
-        <FormContext.Provider value={formError}>
+        <FormContext.Provider value={{ formError, responseError, loadingStatus }}>
             <form className="form" name={name} autoComplete="off" onSubmit={submitHandler}>
                 <legend className="form-title">{title}</legend>
+                {responseError && <span className="response-error"></span>}
                 {children}
             </form>
         </FormContext.Provider>
