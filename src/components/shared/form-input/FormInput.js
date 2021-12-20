@@ -1,65 +1,30 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useFormContext } from '../form/Form';
 import './FormInput.css';
+import validator from '../form/helpers/validateInput';
 
 function FormInput(props) {
-    const [ value, setValue ] = useState('');
-    const [ error, setError ] = useState(null);
+    const { loadingStatus, responseStatus, formStatus } = useFormContext();
 
-    const { formError, responseStatusError, loadingStatus } = useFormContext();
-
-    const inputError = useMemo(function () {
-        return {
-            get() {
-                return error;
-            },
-            set(value = '') {
-                setError(value);
-            },
-            has() {
-                return Boolean(error);
-            }
-        };
-    }, [error, setError]);
+    const input = formStatus.get(props.name);
 
     const changeHandler = useCallback(function (e) {
-        const inputValue = e.currentTarget.value;
-        let message = '';
-
-        if (props.name === 'username') {
-            if (inputValue.length < 4) {
-                message = 'Username should be at least 4 characters long.';
-            }
-
-            if (inputValue.length > 15) {
-                message = 'Username should be 15 characters long at maximum.';
-            }
-
-            if (!/[a-z0-9_.\-]/gi.test(inputValue)) {
-                message = 'Username should contain only english letters, digits and a dot, hyphen or underscore as word separator.';
-            }
-
-            if (!/^(?![_.\-])[a-z0-9_.\-]+(?<![_.\-])$/i.test(inputValue)) {
-                message = 'Username should start and end with a letter or a digit only.';
-            }
-
-            message && (inputError.set(message), formError.set(message));
-        }
-        setValue(e.target.value);
-    }, [setValue]);
+        const validationResult = validator(e.currentTarget.name, e.currentTarget.value);
+        formStatus.set(e.currentTarget.name, e.currentTarget.value, validationResult.valid, validationResult.message);
+    }, [formStatus]);
 
     return (
         <div className="form-row">
-            <div className={`input-field ${responseStatusError.has() || inputError.has() ? 'invalid' : 'valid'}`}>
+            <div className={`input-field ${!(responseStatus || input.valid) ? 'invalid' : 'valid'}`}>
                 <label htmlFor={props.id}>
-                    <input className="form-input" {...props} disabled={loadingStatus.get()} onChange={changeHandler} />
+                    <input className="form-input" {...props} disabled={loadingStatus} onChange={changeHandler} />
                     <span id="label-text">
                         {props.placeholder}
                     </span>
                 </label>
-                <i className="info-icon">{inputError.has() ? '\u2716' : '\u2713'}</i>
+                {(input.touched && input.value.length > 0) && <i className="info-icon">{!input.valid ? '\u2716' : '\u2713'}</i>}
             </div>
-            <span className="error-message">{inputError.get() || 'Looks great.'}</span>
+            {(input.touched && input.value.length > 0 && !input.valid) && <span className="error-message">{input.message}</span>}
         </div>
     );
 }
