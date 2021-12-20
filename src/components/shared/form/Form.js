@@ -16,6 +16,31 @@ function Form({ name, title = 'Fill in the form below', children }) {
     const [ responseError, setResponseError ] = useState(null);
     const [ inputError, setInputError ] = useState(null);
 
+    const loadingStatus = useMemo(function () {
+        return {
+            get() {
+                return isLoading;
+            },
+            set(value = false) {
+                setLoading(value);
+            }
+        };
+    }, [isLoading, setLoading]);
+
+    const responseStatusError = useMemo(function () {
+        return {
+            get() {
+                return responseError;
+            },
+            set(value = '') {
+                setResponseError(value);
+            },
+            has() {
+                return Boolean(responseError);
+            }
+        };
+    }, [responseError, setResponseError]);
+
     const formError = useMemo(function () {
         return {
             get() {
@@ -30,17 +55,6 @@ function Form({ name, title = 'Fill in the form below', children }) {
         };
     }, [inputError, setInputError]);
 
-    const loadingStatus = useMemo(function () {
-        return {
-            get() {
-                return isLoading;
-            },
-            set(value = false) {
-                setLoading(value);
-            }
-        }
-    }, [isLoading, setLoading]);
-
     const submitHandler = useCallback(function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -54,7 +68,7 @@ function Form({ name, title = 'Fill in the form below', children }) {
     }, []);
 
     return (
-        <FormContext.Provider value={{ formError, responseError, loadingStatus }}>
+        <FormContext.Provider value={{ formError, responseStatusError, loadingStatus }}>
             <form className="form" name={name} autoComplete="off" onSubmit={submitHandler}>
                 <legend className="form-title">{title}</legend>
                 {responseError && <span className="response-error"></span>}
