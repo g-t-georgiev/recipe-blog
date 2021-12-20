@@ -1,4 +1,4 @@
-const inputRequirements = {
+const inputRequirementsSchema = {
     username: {
         minLength: {
             value: 4,
@@ -9,13 +9,13 @@ const inputRequirements = {
             message: 'Username should be 20 characters long at maximum.',
         },
         match: {
-            value: /^(?![_.\-])(?!.*[_.\-]{2})[a-z0-9_.\-]{4,20}(?<![_.\-])$/i,
+            value: /^(?![_.-\s])(?!.*[_.-\s]{2})[a-z0-9_.-]{4,20}(?<![_.-\s])$/i,
             message: 'Username can contain letters, digits and a dot, underscore or a hyphen as a word separator.'
         }
     },
     email: {
         match: {
-            value: /^(.+@.+)(?<=\.[a-z]+)$/i,
+            value: /^(?!\s+).+@.+(?<=\.[a-z]+)$/i,
             message: 'Invalid email.'
         }
     },
@@ -29,11 +29,11 @@ const inputRequirements = {
             message: 'Password should be 20 characters long at maximum.'
         },
         match: {
-            value: /^(?=.*[A-Za-z0-9])(?=.*[@$!%*#?&])[A-Za-z0-9@$!%*#?&]{6,20}$/,
-            message: 'Password should contain letters, digits and at least one of the following special symbols: @$!%*#?&'
+            value: /^(?!\s+)(?=.*[A-Za-z0-9])(?=.*[@$!%*#?&])[A-Za-z0-9@$!%*#?&]{6,20}(?<!\s+)$/,
+            message: 'Password should contain only letters, digits and at least one of the following special symbols: @$!%*#?&'
         }
     }
-}
+};
 
 const checks = {
     minLength(value, charCount) {
@@ -46,3 +46,28 @@ const checks = {
         return regex.test(value);
     }
 };
+
+export default function validator(fieldName, fieldValue) {
+    const fieldSchema = inputRequirementsSchema[fieldName];
+    
+    for (const condition in fieldSchema) {
+        if (!fieldSchema.hasOwnProperty(condition)) {
+            return;
+        }
+
+        const { value: conditionValue, message } = fieldSchema[condition];
+        const valid = checks[condition](fieldValue, conditionValue);
+
+        if (!valid) {
+            return {
+                valid,
+                message
+            };
+        }
+    }
+
+    return {
+        valid: true,
+        message: ''
+    }
+}
