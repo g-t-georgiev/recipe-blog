@@ -6,7 +6,7 @@ function FormInput(props) {
     const [ value, setValue ] = useState('');
     const [ error, setError ] = useState(null);
 
-    const formError = useFormContext();
+    const { formError, responseStatusError, loadingStatus } = useFormContext();
 
     const inputError = useMemo(function () {
         return {
@@ -43,23 +43,23 @@ function FormInput(props) {
                 message = 'Username should start and end with a letter or a digit only.';
             }
 
-            message && inputError.set(message);
+            message && (inputError.set(message), formError.set(message));
         }
         setValue(e.target.value);
     }, [setValue]);
 
     return (
         <div className="form-row">
-            <div className={`input-field ${formError.has() || inputError.has() ? 'invalid' : 'valid'}`}>
+            <div className={`input-field ${responseStatusError.has() || inputError.has() ? 'invalid' : 'valid'}`}>
                 <label htmlFor={props.id}>
-                    <input className="form-input" {...props} onChange={changeHandler} />
+                    <input className="form-input" {...props} disabled={loadingStatus.get()} onChange={changeHandler} />
                     <span id="label-text">
                         {props.placeholder}
                     </span>
                 </label>
-                <i className="info-icon">{formError.has() || inputError.has() ? '\u2716' : '\u2713'}</i>
+                <i className="info-icon">{responseStatusError.has() || inputError.has() ? '\u2716' : '\u2713'}</i>
             </div>
-            <span className="error-message">{formError.get() || inputError.get() || 'Looks great.'}</span>
+            <span className="error-message">{responseStatusError.get() || inputError.get() || 'Looks great.'}</span>
         </div>
     );
 }
