@@ -2,12 +2,12 @@ import { useFormContext } from '../form/Form';
 import './FormButton.css';
 
 function FormButton({ type = 'submit', text = 'Submit' }) {
-    const formError = useFormContext();
+    const { formError, loadingStatus } = useFormContext();
 
     return (
         <div className="form-row">
             <button className="form-button" type={type} disabled={!formError.has()}>
-                {text}
+                {loadingStatus.get() ? 'Loading...' : text}
             </button>
         </div>
     );
