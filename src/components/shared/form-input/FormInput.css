@@ -51,6 +51,14 @@
     border-color: green;
 }
 
+.invalid .form-input:not(:placeholder-shown) {
+    border-color: red;
+}
+
+.valid .form-input:not(:placeholder-shown) {
+    border-color: green;
+}
+
 .info-icon {
     position: absolute;
     top: 0;
@@ -62,95 +70,31 @@
     font-weight: bold;
 }
 
-.info-icon::after {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    display: block;
-    width: 80%;
-    padding: 2%;
-    border: 2px solid black;
-    border-radius: 5px;
-    font-size: .8rem;
-    color: black;
-    background-color: pink;
-}
-
-.info-icon::after {
-    display: none;
-}
-
-.info-icon:hover {
-    cursor: pointer;
-}
-
-.info-icon:hover ~ .info-icon::after {
-    display: block;
-}
-
 .info-icon {
     display: none;
 }
 
 .error-message {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
     display: block;
-    width: 80%;
-    padding: 2%;
-    border: 2px solid black;
-    border-radius: 5px;
-    font-size: .8rem;
-    color: black;
-    background-color: pink;
+    width: 100%;
+    padding: 1%;
+    margin: 0;
+    font-size: .75rem;
+    text-align: left;
+    color: red;
+    background-color: transparent;
 }
 
-.error-message::before {
-    content: ' ';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -8px;
-    border-width: 8px;
-    border-color: transparent;
-    border-top-color: black;
-    border-style: solid;
-}
-
-.error-message {
-    display: none;
-}
-
-.invalid ~ .info-icon {
+.invalid .info-icon {
     display: inline-block;
     color: red;
 }
 
-.valid ~ .info-icon {
+.valid .info-icon {
     display: inline-block;
     color: green;
 }
 
-.show-message {
-    display: block;
-}
-
-@media screen and (min-width: 802px) {
-    .input-field.invalid ~ .error-message {
-        display: block;
-        position: static;
-        width: 100%;
-        background-color: transparent;
-        color: red;
-        border: none;
-        padding: 1%;
-        margin: 0;
-        text-align: left;
-        font-size: .75rem;
-    }
-
-    .info-icon:hover {
-        cursor: text;
-    }
-}
+/* @media screen and (min-width: 802px) {
+    
+} */
