@@ -26,10 +26,10 @@ function Header() {
             <nav className="site-navigation">
                 <ToggleNavButton toggleNavHandler={toggleNavState} />
                 <section className={`site-navigation-links ${navState.opened ? 'opened' : 'closed'}`} onClick={toggleNavState}>
-                    <NavLink className={setActiveLinkStyles} to="/about">About</NavLink>
-                    <NavLink className={setActiveLinkStyles} to="/">Recipes</NavLink>
-                    <NavLink className={setActiveLinkStyles} to="/auth/login">Login</NavLink>
-                    <NavLink className={setActiveLinkStyles} to="/auth/register">Register</NavLink>
+                    <NavLink className={setActiveLinkStyles} to="/">Home</NavLink>
+                    <NavLink className={setActiveLinkStyles} to="/recipes">Recipes</NavLink>
+                    <NavLink className={setActiveLinkStyles} to="/users/login">Login</NavLink>
+                    <NavLink className={setActiveLinkStyles} to="/users/register">Register</NavLink>
                 </section>
             </nav>
         </header>
