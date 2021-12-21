@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Link } from "react-router-dom";
-// import { useAuthContext } from '../../contexts/AuthContext';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 import './Header.css';
 
@@ -8,8 +8,8 @@ import ToggleNavButton from "./ToggleNavButton/ToggleNavButton";
 
 function Header() {
     const [navState, setNavState] = useState({ opened: false });
-    // const { user, signOut } = useAuthContext();
-    console.log('re-render');
+    const { user, signOut } = useAuthContext();
+
     const openNav = useCallback(function (e) {
         if (navState.opened) {
             return;
@@ -42,11 +42,11 @@ function Header() {
                 <ToggleNavButton openNavHandler={openNav} />
                 <section className={`site-navigation-links ${navState.opened ? 'opened' : 'closed'}`} onMouseUp={closeNav}>
                     <Link className="site-navigation-link" to="/">Home</Link>
-
+                    
                     <span className="dropdown">
                         <span className="dropdown-title">Recipes</span>
                         <span className="dropdown-links">
-                            <Link className="site-navigation-link" to="/recipes">All</Link>
+                            <Link className="site-navigation-link" to="/recipes">Browse All</Link>
                             <span className="dropdown-section-title">Categories</span>
                             <Link className="site-navigation-link" to="/recipes?category=breakfast">Breakfast</Link>
                             <Link className="site-navigation-link" to="/recipes?category=lunch">Lunch</Link>
@@ -60,12 +60,29 @@ function Header() {
                     <span className="dropdown">
                         <span className="dropdown-title">Profile</span>
                         <span className="dropdown-links">
-                            <Link className="site-navigation-link" to="/users/login">Login</Link>
-                            <Link className="site-navigation-link" to="/users/register">Register</Link>
+                            {
+                                user.isLoggedIn
+                                    ? (
+                                        <>
+                                            <span className="dropdown-section-title">Hello, {user.username}!</span>
+                                            <Link className="site-navigation-link" to={`/users/${user.id}/favorites`}>Favorites</Link>
+                                            <Link className="site-navigation-link" to={`/users/${user.id}/recipes`}>My Recipes</Link>
+                                            <Link className="site-navigation-link" to="/recipes/create">Add Recipe</Link>
+                                            <Link className="site-navigation-link" to="/users/logout"></Link>
+                                        </>
+                                    )
+                                    : (
+                                        <>
+                                            <span className="dropdown-section-title">Hello, Guest!</span>
+                                            <Link className="site-navigation-link" to="/users/login">Login</Link>
+                                            <Link className="site-navigation-link" to="/users/register">Register</Link>
+                                        </>
+                                    )
+                            }
                         </span>
                     </span>
                 </section>
-            </nav>
+            </nav >
         </header >
     );
 }
