@@ -3,9 +3,10 @@
     font-size: .95rem;
     margin-top: 7%;
     flex-direction: column;
+    justify-content: flex-start;
 }
 
-@media screen and (min-width: 450px) {
+@media screen and (min-width: 550px) {
     .form-footer {
         flex-direction: row;
     }
