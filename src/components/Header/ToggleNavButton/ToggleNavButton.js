@@ -1,6 +1,6 @@
-function ToggleNavButton({ toggleNavHandler }) {
+function ToggleNavButton({ openNavHandler }) {
     return (
-        <button onClick={toggleNavHandler} className="toggle-navigation-button">&#9776;</button>
+        <button onClick={openNavHandler} className="toggle-navigation-button">&#9776;</button>
     )
 }
 
