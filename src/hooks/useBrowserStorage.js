@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-export const useBrowserStorage = function (key, initialValue, storage = localStorage) {
+export const useBrowserStorage = function (key = '', initialValue = {}, storage = localStorage) {
     const [ state, setState ] = useState(function () {
         try {
             let item = storage.getItem(key);
@@ -18,7 +18,7 @@ export const useBrowserStorage = function (key, initialValue, storage = localSto
         } catch (error) {
             console.log(error);
         }
-    }, [storage, setState]);
+    }, [key, storage, setState]);
 
     const removeItem = useCallback(function () {
         try {
@@ -27,7 +27,7 @@ export const useBrowserStorage = function (key, initialValue, storage = localSto
         } catch (error) {
             console.log(error);
         }
-    }, [storage, setState]);
+    }, [key, initialValue, storage, setState]);
 
     return [state, setItem, removeItem];
 }
