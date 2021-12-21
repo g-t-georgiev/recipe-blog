@@ -1,22 +1,37 @@
-import { useState } from 'react';
-import { NavLink, Link } from "react-router-dom";
+import { useState, useCallback } from 'react';
+import { Link } from "react-router-dom";
+// import { useAuthContext } from '../../contexts/AuthContext';
 
 import './Header.css';
 
 import ToggleNavButton from "./ToggleNavButton/ToggleNavButton";
 
-const setActiveLinkStyles = function ({ isActive }) {
-    return isActive
-        ? 'site-navigation-link link-active'
-        : 'site-navigation-link';
-}
-
 function Header() {
     const [navState, setNavState] = useState({ opened: false });
+    // const { user, signOut } = useAuthContext();
+    console.log('re-render');
+    const openNav = useCallback(function (e) {
+        if (navState.opened) {
+            return;
+        }
 
-    const toggleNavState = function () {
-        setNavState({ opened: !navState.opened });
-    }
+        setNavState({ opened: true });
+    }, [navState, setNavState]);
+
+    const closeNav = useCallback(function (e) {
+        const windowWidth = window.innerWidth;
+        const currentTargetWidth = e.currentTarget.clientWidth;
+
+        if (windowWidth !== currentTargetWidth) {
+            return;
+        }
+
+        if (!navState.opened) {
+            return;
+        }
+
+        setNavState({ opened: false });
+    }, [navState, setNavState]);
 
     return (
         <header className="site-header">
@@ -24,9 +39,9 @@ function Header() {
                 Food Blog
             </h2>
             <nav className="site-navigation">
-                <ToggleNavButton toggleNavHandler={toggleNavState} />
-                <section className={`site-navigation-links ${navState.opened ? 'opened' : 'closed'}`} onClick={toggleNavState}>
-                    <NavLink className={setActiveLinkStyles} to="/">Home</NavLink>
+                <ToggleNavButton openNavHandler={openNav} />
+                <section className={`site-navigation-links ${navState.opened ? 'opened' : 'closed'}`} onMouseUp={closeNav}>
+                    <Link className="site-navigation-link" to="/">Home</Link>
 
                     <span className="dropdown">
                         <span className="dropdown-title">Recipes</span>
@@ -45,8 +60,8 @@ function Header() {
                     <span className="dropdown">
                         <span className="dropdown-title">Profile</span>
                         <span className="dropdown-links">
-                            <NavLink className={setActiveLinkStyles} to="/users/login">Login</NavLink>
-                            <NavLink className={setActiveLinkStyles} to="/users/register">Register</NavLink>
+                            <Link className="site-navigation-link" to="/users/login">Login</Link>
+                            <Link className="site-navigation-link" to="/users/register">Register</Link>
                         </span>
                     </span>
                 </section>
