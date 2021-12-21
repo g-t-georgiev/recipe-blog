@@ -6,7 +6,7 @@ import FormFooter from '../../shared/form-footer/FormFooter';
 function Register() {
     return (
         <section>
-            <Form name="registerForm" title="Create an account">
+            <Form name="registerForm" title="Create new account">
                 <FormInput type="text" name="username" id="username" placeholder="Username" />
                 <FormInput type="email" name="email" id="email" placeholder="Email" />
                 <FormInput type="password" name="password" id="password" placeholder="Password" />
