@@ -16,8 +16,9 @@ function App() {
 				<main className="main-content">
 					<Routes>
 						<Route path="/" element={<Home />} />
-						<Route path="/auth/login" element={<Login />} />
-						<Route path="/auth/register" element={<Register />} />
+						<Route path="/recipes" element={<Home />} />
+						<Route path="/users/login" element={<Login />} />
+						<Route path="/users/register" element={<Register />} />
 					</Routes>
 				</main>
 			</div>
