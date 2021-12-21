@@ -11,7 +11,7 @@ function Register() {
                 <FormInput type="email" name="email" id="email" placeholder="Email" />
                 <FormInput type="password" name="password" id="password" placeholder="Password" />
                 <FormButton text="Sign up" />
-                <FormFooter span={{ text: 'Already have an account?' }} link={{ text: 'Sign in.', to: '/auth/login' }} />
+                <FormFooter span={{ text: 'Already have an account?' }} link={{ text: 'Sign in.', to: '/users/login' }} />
             </Form>
         </section>
     );
