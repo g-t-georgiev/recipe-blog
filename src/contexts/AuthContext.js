@@ -1,6 +1,8 @@
 import { createContext, useContext, useCallback, useMemo } from 'react';
 import { useBrowserStorage } from '../hooks/useBrowserStorage';
 
+import { userCachKey } from '../constants';
+
 const initialState = {
     id: '',
     username: '',
@@ -15,7 +17,7 @@ export const useAuthContext = function () {
 }
 
 export const AuthContextProvider = function ({ children }) {
-    const [user, setUser, resetUser] = useBrowserStorage('user', initialState);
+    const [user, setUser, resetUser] = useBrowserStorage(userCachKey, initialState);
 
     const signIn = useCallback(function (authData) {
         setUser(authData);
