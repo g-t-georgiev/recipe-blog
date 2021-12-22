@@ -54,7 +54,7 @@ function Form({ name, title = 'Fill in the form below', submitAction, children }
     }, [response]);
 
     const updateResponseStatus = useCallback(function ({ ok, message }) {
-        setResponseStatus((status) => {
+        setResponseStatus(function (status) {
             return {
                 ...status,
                 ok,
@@ -88,6 +88,14 @@ function Form({ name, title = 'Fill in the form below', submitAction, children }
                         }
                     };
                 });
+            },
+            updateSubmitStatus(submitted = false) {
+                setStatus(function (status) {
+                    return {
+                        ...status,
+                        submitted
+                    };
+                });
             }
         }
     }, [status, setStatus]);
@@ -101,8 +109,8 @@ function Form({ name, title = 'Fill in the form below', submitAction, children }
 
         console.log(formFieldData);
 
-        submitAction();
-    }, []);
+        submitAction(updateLoadingStatus, formStatus.updateSubmitStatus, updateResponseStatus);
+    }, [submitAction, updateLoadingStatus, updateResponseStatus, formStatus.updateSubmitStatus]);
 
     return (
         <FormContext.Provider value={{ loadingStatus, responseStatus, formStatus }}>
