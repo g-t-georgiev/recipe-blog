@@ -45,9 +45,23 @@ function Form({ name, title = 'Fill in the form below', children }) {
         return isLoading;
     }, [isLoading]);
 
+    const updateLoadingStatus = useCallback(function (value) {
+        setLoadingStatus(value);
+    }, [setLoadingStatus]);
+
     const responseStatus = useMemo(function () {
         return response.ok;
     }, [response]);
+
+    const updateResponseStatus = useCallback(function ({ ok, message }) {
+        setResponseStatus((status) => {
+            return {
+                ...status,
+                ok,
+                message
+            }
+        })
+    }, [setResponseStatus]);
 
     const formStatus = useMemo(function () {
         return {
@@ -87,7 +101,7 @@ function Form({ name, title = 'Fill in the form below', children }) {
 
         console.log(formFieldData);
 
-        console.log('Form submitted successfully.');
+        
     }, []);
 
     return (
