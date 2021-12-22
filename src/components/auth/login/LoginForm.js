@@ -1,4 +1,5 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../../contexts/AuthContext';
 import * as authService from '../../../services/authService';
 
@@ -8,9 +9,38 @@ import FormButton from '../../shared/form-button/FormButton';
 import FormFooter from '../../shared/form-footer/FormFooter';
 
 function LoginForm() {
-    const loginHandler = useCallback(function (updateFormLoadingStatus, updateFormSubmitStatus, updateServiceResponseStatus) {
-        // Implement login logic
-    }, []);
+    const { signIn } = useAuthContext();
+    const [ timerId, setTimer ] = useState(null);
+    const redirectTo = useNavigate();
+
+    const redirectDelayHandler = useCallback(function () {
+        clearTimeout(timerId);
+        redirectTo('/');
+    }, [redirectTo, timerId]);
+
+    const loginHandler = useCallback(async function (formFieldData, updateFormLoadingStatus, formStatus, updateServiceResponseStatus) {
+        const [ updateFormSubmitStatus, updateFormFieldStatus ] = formStatus;
+
+        try {
+            updateFormLoadingStatus(true);
+    
+            const userData = await authService.login(formFieldData.email, formFieldData.password);
+            signIn(userData);
+            
+            updateServiceResponseStatus({ ok: true, message: ''});
+
+            setTimer(
+                setTimeout(redirectDelayHandler, 1500)
+            );
+        } catch (error) {
+            updateServiceResponseStatus({ ok: false, message: error.message });
+            Object.keys(formFieldData)
+                .forEach(field => updateFormFieldStatus(field, formFieldData[field], false, `Incorrect or non-existing ${field}.`));
+        } finally {
+            updateFormLoadingStatus(false);
+            updateFormSubmitStatus(true);
+        }
+    }, [redirectDelayHandler, signIn]);
 
     return (
         <Form name="loginForm" title="Sign in to your account" submitAction={loginHandler}>

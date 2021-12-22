@@ -4,7 +4,7 @@ import './FormInput.css';
 import validator from '../form/helpers/validateInput';
 
 function FormInput(props) {
-    const { loadingStatus, responseStatus, formStatus } = useFormContext();
+    const { loadingStatus, formStatus } = useFormContext();
 
     const input = formStatus.get(props.name);
 
@@ -15,14 +15,14 @@ function FormInput(props) {
 
     return (
         <div className="form-row">
-            <div className={`input-field ${!(responseStatus || input.valid) ? 'invalid' : 'valid'}`}>
+            <div className={`input-field ${input.valid ? 'valid' : 'invalid'}`}>
                 <label htmlFor={props.id}>
                     <input className="form-input" {...props} disabled={loadingStatus} onChange={changeHandler} />
                     <span id="label-text">
                         {props.placeholder}
                     </span>
                 </label>
-                {(input.touched && input.value.length > 0) && <i className="info-icon">{!input.valid ? '\u2716' : '\u2713'}</i>}
+                {(input.touched && input.value.length > 0) && <i className="info-icon">{input.valid ? '\u2713'  : '\u2716'}</i>}
             </div>
             {(input.touched && input.value.length > 0 && !input.valid) && <span className="error-message">{input.message}</span>}
         </div>

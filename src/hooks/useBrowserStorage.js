@@ -1,33 +1,33 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 
-export const useBrowserStorage = function (key = '', initialValue = {}, storage = localStorage) {
+export const useBrowserStorage = function (key = '', initialValue = {}) {
     const [ state, setState ] = useState(function () {
         try {
-            let item = storage.getItem(key);
+            let item = localStorage.getItem(key);
             return item ? JSON.parse(item) : initialValue;
         } catch (error) {
             console.log(error);
-            setState(initialValue);
+            return initialValue;
         }
     });
 
-    const setItem = useCallback(function (value) {
+    const setItem = function (value) {
         try {
-            storage.setItem(key, JSON.stringify(value));
+            localStorage.setItem(key, JSON.stringify(value));
             setState(value);
         } catch (error) {
             console.log(error);
         }
-    }, [key, storage, setState]);
+    };
 
-    const removeItem = useCallback(function () {
+    const removeItem = function () {
         try {
-            storage.removeItem(key);
+            localStorage.removeItem(key);
             setState(initialValue);
         } catch (error) {
             console.log(error);
         }
-    }, [key, initialValue, storage, setState]);
+    };
 
     return [state, setItem, removeItem];
 }

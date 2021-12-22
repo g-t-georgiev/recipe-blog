@@ -5,6 +5,7 @@ import { useAuthContext } from '../../contexts/AuthContext';
 import './Header.css';
 
 import ToggleNavButton from "./ToggleNavButton/ToggleNavButton";
+import SignOutButton from './SignOutButton/SignOutButton';
 
 function Header() {
     const [navState, setNavState] = useState({ opened: false });
@@ -68,7 +69,7 @@ function Header() {
                                             <Link className="site-navigation-link" to={`/users/${user.id}/favorites`}>Favorites</Link>
                                             <Link className="site-navigation-link" to={`/users/${user.id}/recipes`}>My Recipes</Link>
                                             <Link className="site-navigation-link" to="/recipes/create">Add Recipe</Link>
-                                            <Link className="site-navigation-link" to="/users/logout"></Link>
+                                            <SignOutButton signOutAction={signOut}>Logout</SignOutButton>
                                         </>
                                     )
                                     : (

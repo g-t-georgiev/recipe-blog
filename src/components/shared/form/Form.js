@@ -73,6 +73,9 @@ function Form({ name, title = 'Fill in the form below', submitAction, children }
                     .keys(status.fields)
                     .reduce((acc, field) => status.fields[field].valid && acc, true);
             },
+            submitted() {
+                return status.submitted;
+            },
             set(name, value, valid, message) {
                 setStatus(function (status) {
                     return {
@@ -89,12 +92,12 @@ function Form({ name, title = 'Fill in the form below', submitAction, children }
                     };
                 });
             },
-            updateSubmitStatus(submitted = false) {
+            updateFormSubmitStatus(value = false) {
                 setStatus(function (status) {
                     return {
                         ...status,
-                        submitted
-                    };
+                        submitted: value
+                    }
                 });
             }
         }
@@ -107,16 +110,14 @@ function Form({ name, title = 'Fill in the form below', submitAction, children }
         const form = e.currentTarget;
         const formFieldData = Object.fromEntries(new FormData(form));
 
-        console.log(formFieldData);
-
-        submitAction(updateLoadingStatus, formStatus.updateSubmitStatus, updateResponseStatus);
-    }, [submitAction, updateLoadingStatus, updateResponseStatus, formStatus.updateSubmitStatus]);
+        submitAction.call(this, formFieldData, updateLoadingStatus, [ formStatus.updateFormSubmitStatus, formStatus.set ], updateResponseStatus);
+    }, [submitAction, updateLoadingStatus, updateResponseStatus, formStatus.updateFormSubmitStatus, formStatus.set]);
 
     return (
         <FormContext.Provider value={{ loadingStatus, responseStatus, formStatus }}>
             <form className="form" name={name} autoComplete="off" onSubmit={submitHandler}>
                 <legend className="form-title">{title}</legend>
-                {(!isLoading && status.submitted && !response.ok) && <span className="response-error">{response.message}</span>}
+                {(!isLoading && status.submitted) && <span className="response-error">{response.message}</span>}
                 {children}
             </form>
         </FormContext.Provider>
