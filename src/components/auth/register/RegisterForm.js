@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import * as authService from '../../../services/authService';
 
 import Form from '../../shared/form/Form';
@@ -6,8 +7,12 @@ import FormButton from '../../shared/form-button/FormButton';
 import FormFooter from '../../shared/form-footer/FormFooter';
 
 function RegisterForm() {
+    const registerHandler = useCallback(function (updateFormLoadingStatus, updateFormSubmitStatus, updateServiceResponseStatus) {
+        // Implement register logic
+    }, []);
+
     return (
-        <Form name="registerForm" title="Create new account">
+        <Form name="registerForm" title="Create new account" submitAction={registerHandler}>
             <FormInput type="text" name="username" id="username" placeholder="Username" />
             <FormInput type="email" name="email" id="email" placeholder="Email" />
             <FormInput type="password" name="password" id="password" placeholder="Password" />
