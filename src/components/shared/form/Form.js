@@ -17,7 +17,7 @@ const formStatusInitial = {
     fields: {}
 };
 
-function Form({ name, title = 'Fill in the form below', children }) {
+function Form({ name, title = 'Fill in the form below', submitAction, children }) {
     const [isLoading, setLoadingStatus] = useState(false);
     const [response, setResponseStatus] = useState(responseStatusInitial);
     const [status, setStatus] = useState(function () {
@@ -101,7 +101,7 @@ function Form({ name, title = 'Fill in the form below', children }) {
 
         console.log(formFieldData);
 
-        
+        submitAction();
     }, []);
 
     return (
