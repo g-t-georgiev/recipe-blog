@@ -37,7 +37,7 @@ const api = {
     get(path, parseJSON = true) {
         return request('get', path, null, parseJSON);
     },
-    post(path, payload, parseJSON = false) {
+    post(path, payload, parseJSON = true) {
         return request('post', path, payload, parseJSON);
     },
     put(path, payload, parseJSON = true) {
