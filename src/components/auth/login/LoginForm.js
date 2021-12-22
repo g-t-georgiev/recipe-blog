@@ -8,7 +8,9 @@ import FormButton from '../../shared/form-button/FormButton';
 import FormFooter from '../../shared/form-footer/FormFooter';
 
 function LoginForm() {
-    const loginHandler = useCallback(function () {}, []);
+    const loginHandler = useCallback(function (updateFormLoadingStatus, updateFormSubmitStatus, updateServiceResponseStatus) {
+        // Implement login logic
+    }, []);
 
     return (
         <Form name="loginForm" title="Sign in to your account" submitAction={loginHandler}>
