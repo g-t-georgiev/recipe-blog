@@ -6,11 +6,11 @@ import validator from '../form/helpers/validateInput';
 function FormInput(props) {
     const { loadingStatus, formStatus } = useFormContext();
 
-    const input = formStatus.get(props.name);
+    const input = formStatus.getFormFieldStatus(props.name);
 
     const changeHandler = useCallback(function (e) {
         const validationResult = validator(e.currentTarget.name, e.currentTarget.value);
-        formStatus.set(e.currentTarget.name, e.currentTarget.value, validationResult.valid, validationResult.message);
+        formStatus.updateFormFieldStatus(e.currentTarget.name, e.currentTarget.value, validationResult.valid, validationResult.message);
     }, [formStatus]);
 
     return (
