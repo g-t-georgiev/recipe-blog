@@ -65,8 +65,8 @@ function Form({ name, title = 'Fill in the form below', submitAction, children }
 
     const formStatus = useMemo(function () {
         return {
-            get(name) {
-                return status.fields[name];
+            getFormFieldStatus(fieldName) {
+                return status.fields[fieldName];
             },
             valid() {
                 return Object
@@ -76,7 +76,7 @@ function Form({ name, title = 'Fill in the form below', submitAction, children }
             submitted() {
                 return status.submitted;
             },
-            set(name, value, valid, message) {
+            updateFormFieldStatus(name, value, valid, message) {
                 setStatus(function (status) {
                     return {
                         ...status,
@@ -110,8 +110,8 @@ function Form({ name, title = 'Fill in the form below', submitAction, children }
         const form = e.currentTarget;
         const formFieldData = Object.fromEntries(new FormData(form));
 
-        submitAction.call(this, formFieldData, updateLoadingStatus, [ formStatus.updateFormSubmitStatus, formStatus.set ], updateResponseStatus);
-    }, [submitAction, updateLoadingStatus, updateResponseStatus, formStatus.updateFormSubmitStatus, formStatus.set]);
+        submitAction.call(this, formFieldData, updateLoadingStatus, formStatus.updateFormSubmitStatus, formStatus.updateFormFieldStatus, updateResponseStatus);
+    }, [submitAction, updateLoadingStatus, updateResponseStatus, formStatus.updateFormSubmitStatus, formStatus.updateFormFieldStatus]);
 
     return (
         <FormContext.Provider value={{ loadingStatus, responseStatus, formStatus }}>
