@@ -9,7 +9,7 @@ function FormButton({ type = 'submit', text = 'Submit' }) {
             <button 
                 className="form-button" 
                 type={type} 
-                disabled={!formStatus.valid()} 
+                disabled={!formStatus.valid() || loadingStatus} 
                 title={!formStatus.valid() ? 'Correct empty/invalid inputs before submitting.' : text}>
                 {loadingStatus ? 'Loading...' : text}
             </button>
