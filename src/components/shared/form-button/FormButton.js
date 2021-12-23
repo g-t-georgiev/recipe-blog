@@ -1,6 +1,9 @@
 import { useFormContext } from '../form/Form';
 import './FormButton.css';
 
+const loadingStatusTitle = 'Processing data...';
+const invalidStatusTitle = 'Please correct emty or invalid inputs before submitting.';
+
 function FormButton({ type = 'submit', text = 'Submit' }) {
     const { loadingStatus, formStatus } = useFormContext();
 
@@ -10,7 +13,14 @@ function FormButton({ type = 'submit', text = 'Submit' }) {
                 className="form-button" 
                 type={type} 
                 disabled={!formStatus.valid() || loadingStatus} 
-                title={!formStatus.valid() ? 'Correct empty/invalid inputs before submitting.' : text}>
+                title={
+                    !formStatus.valid() 
+                        ? invalidStatusTitle 
+                        : loadingStatus 
+                        ? loadingStatusTitle 
+                        : text
+                    }
+                >
                 {loadingStatus ? 'Loading...' : text}
             </button>
         </div>
