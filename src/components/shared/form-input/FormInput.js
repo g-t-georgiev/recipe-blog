@@ -1,6 +1,8 @@
 import { useCallback } from 'react';
-import { useFormContext } from '../form/Form';
+import { useFormContext } from '../../../contexts/FormContext';
+
 import './FormInput.css';
+
 import validator from '../form/helpers/validateInput';
 
 function FormInput(props) {
