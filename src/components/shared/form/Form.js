@@ -1,11 +1,7 @@
-import { createContext, useContext, useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 import './Form.css';
 
-export const FormContext = createContext(null);
-
-export const useFormContext = function () {
-    return useContext(FormContext);
-};
+import { FormContext } from "../../../contexts/FormContext";
 
 const responseStatusInitial = {
     ok: false,
