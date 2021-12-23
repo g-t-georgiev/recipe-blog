@@ -29,8 +29,8 @@ const inputRequirementsSchema = {
             message: 'Password should be 20 characters long at maximum.'
         },
         match: {
-            value: /^(?!\s+)(?=.*[A-Za-z0-9])(?=.*[@$!%*#?&])[A-Za-z0-9@$!%*#?&]{6,20}(?<!\s+)$/,
-            message: 'Password should contain only letters, digits and at least one of the following special symbols: @$!%*#?&'
+            value: /^[A-Za-z0-9@$!%*#?&]{6,20}$/,
+            message: 'Password can include letters, digits or the following symbols @$!%*#?&'
         }
     }
 };
