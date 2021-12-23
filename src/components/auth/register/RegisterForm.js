@@ -16,9 +16,7 @@ function RegisterForm() {
         redirectTo('/users/login');
     }, [redirectTo, timerId]);
 
-    const registerHandler = useCallback(async function (formFieldData, updateFormLoadingStatus, formStatus, updateServiceResponseStatus) {
-        const [ updateFormSubmitStatus, updateFormFieldStatus ] = formStatus;
-
+    const registerHandler = useCallback(async function (formFieldData, updateFormLoadingStatus, updateFormSubmitStatus, updateFormFieldStatus, updateServiceResponseStatus) {
         try {
             updateFormLoadingStatus(true);
             await authService.register(formFieldData.username, formFieldData.email, formFieldData.password);

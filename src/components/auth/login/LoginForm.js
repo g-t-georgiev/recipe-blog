@@ -18,9 +18,7 @@ function LoginForm() {
         redirectTo('/');
     }, [redirectTo, timerId]);
 
-    const loginHandler = useCallback(async function (formFieldData, updateFormLoadingStatus, formStatus, updateServiceResponseStatus) {
-        const [ updateFormSubmitStatus, updateFormFieldStatus ] = formStatus;
-
+    const loginHandler = useCallback(async function (formFieldData, updateFormLoadingStatus, updateFormSubmitStatus, updateFormFieldStatus, updateServiceResponseStatus) {
         try {
             updateFormLoadingStatus(true);
     
