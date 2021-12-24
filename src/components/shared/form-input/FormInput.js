@@ -9,7 +9,7 @@ function FormInput(props) {
         <div className="form-row">
             <div className="input-field">
                 <label htmlFor={props.id}>
-                    <input className="form-input" {...props} />
+                    <input className={`form-input ${formState.hasErrors(props.name) ? 'invalid' : ''}`} {...props} />
                     <span id="label-text">
                         {props.placeholder}
                     </span>
