@@ -34,6 +34,10 @@
     border-color: black;
 }
 
+.form-input.invalid {
+    border-color: red;
+}
+
 .form-input:focus ~ #label-text,
 .form-input:not(:placeholder-shown) ~ #label-text {
     top: -25%;
@@ -43,35 +47,9 @@
     color: black;
 }
 
-.invalid {
-    border-color: red;
-}
-
-.valid {
-    border-color: green;
-}
-
-.invalid .form-input:not(:placeholder-shown) {
-    border-color: red;
-}
-
-.valid .form-input:not(:placeholder-shown) {
-    border-color: green;
-}
-
-.info-icon {
-    position: absolute;
-    top: 0;
-    right: 2%;
-    display: inline-block;
-    padding: 3% 2%;
-    font-style: normal;
-    font-size: 1.1rem;
-    font-weight: bold;
-}
-
-.info-icon {
-    display: none;
+.form-input.invalid:focus ~ #label-text,
+.form-input.invalid:not(:placeholder-shown) ~ #label-text {
+    color: red;
 }
 
 .error-message {
@@ -84,17 +62,3 @@
     color: red;
     background-color: transparent;
 }
-
-.invalid .info-icon {
-    display: inline-block;
-    color: red;
-}
-
-.valid .info-icon {
-    display: inline-block;
-    color: green;
-}
-
-/* @media screen and (min-width: 802px) {
-    
-} */
