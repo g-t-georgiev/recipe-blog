@@ -1,48 +1,73 @@
 import { useReducer } from "react";
 
 const reducer = function (state, { type, payload }) {
-    const newState = { ...state };
-    let { errors, response } = newState;
-
     switch (type) {
-        case 'validating': {
-            newState.errors = [ ...errors, ...payload.errors ];
+        case 'validate': {
+            if (payload.valid) {
+                if (state.hasErrors(payload.name)) {
+                    return {
+                        ...state,
+                        errors: state.errors.filter(error => error.name !== payload.name)
+                    }
+                } else {
+                    return state;
+                }
+            } else {
+                if (state.hasErrors(payload.name)) {
+                    return state.getErrors(payload.name).some(error => error.message === payload.message)
+                        ? state
+                        : {
+                            ...state,
+                            errors: state.errors.concat(payload)
+                        }
+                } else {
+                    return {
+                        ...state,
+                        errors: state.errors.concat(payload)
+                    };
+                }
+            }
         }
 
         case 'processing': {
-            newState.submitted = true;
-            newState.loading = true;
-            break;
+            return {
+                ...state,
+                loading: true,
+                submitted: true
+            };
         }
 
-        case 'succeeded': {
-            newState.loading = false;
-            newState.errors = [];
-            newState.response = { ok: true, message: '' };
-            break;
+        case 'success': {
+            return {
+                ...state,
+                loading: false
+            };
         }
 
         case 'failed': {
-            newState.loading = false;
-            newState.errors = [ ...errors, ...payload.errors ];
-            newState.response = { ...response, ...payload.response };
-            break;
+            return {
+                ...state,
+                loading: false,
+                response: payload.message
+            };
+        }
+
+        default: {
+            return state;
         }
     }
-
-    return newState;
 };
 
 const initialState = {
     loading: false,
     submitted: false,
+    response: '',
     errors: [],
-    response: {
-        ok: false,
-        message: ''
+    getErrors(name) {
+        return this.errors.filter(error => error.name === name);
     },
-    get valid() {
-        return this.errors.length > 0;
+    hasErrors(name) {
+        return this.errors.some(error => error.name === name);
     }
 };
 
