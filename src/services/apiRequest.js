@@ -3,6 +3,8 @@ import getAccessToken from './getAccessToken';
 
 const request = async function (method, path, payload, parseJSON, isAuthenticated) {
     try {
+        const requestController = new AbortController();
+
         method = method ?? 'get';
 
         if (!path) {
@@ -12,6 +14,7 @@ const request = async function (method, path, payload, parseJSON, isAuthenticate
         let options = {};
 
         options.method = method;
+        options.sign = requestController.signal;
         options.headers = {};
 
         if (['post', 'put', 'patch'].includes(method)) {
@@ -38,7 +41,7 @@ const request = async function (method, path, payload, parseJSON, isAuthenticate
             result = await result.json();
         }
     
-        return result;
+        return [result, requestController];
     } catch (error) {
         console.error(error);
         throw error;
