@@ -1,32 +1,31 @@
-import { useCallback } from 'react';
 import { useFormContext } from '../../../contexts/FormContext';
 
 import './FormInput.css';
 
-import validator from '../form/helpers/validateInput';
-
 function FormInput(props) {
-    const { loadingStatus, formStatus } = useFormContext();
-
-    const input = formStatus.getFormFieldStatus(props.name);
-
-    const changeHandler = useCallback(function (e) {
-        const validationResult = validator(e.currentTarget.name, e.currentTarget.value);
-        formStatus.updateFormFieldStatus(e.currentTarget.name, e.currentTarget.value, validationResult.valid, validationResult.message);
-    }, [formStatus]);
+    const formState = useFormContext();
 
     return (
         <div className="form-row">
-            <div className={`input-field ${input.valid ? 'valid' : 'invalid'}`}>
+            <div className="input-field">
                 <label htmlFor={props.id}>
-                    <input className="form-input" {...props} disabled={loadingStatus} onChange={changeHandler} />
+                    <input className="form-input" {...props} />
                     <span id="label-text">
                         {props.placeholder}
                     </span>
                 </label>
-                {(input.touched && input.value.length > 0) && <i className="info-icon">{input.valid ? '\u2713'  : '\u2716'}</i>}
             </div>
-            {(input.touched && input.value.length > 0 && !input.valid) && <span className="error-message">{input.message}</span>}
+            {
+                formState.hasErrors(props.name)
+                && formState.getErrors(props.name)
+                    .map(
+                        (error) => (
+                            <span key={error.name + error.message} className="error-message">
+                                {error.message}
+                            </span>
+                        )
+                    )
+            }
         </div>
     );
 }
