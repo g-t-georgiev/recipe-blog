@@ -36,7 +36,7 @@ function LoginForm() {
 
             redirectTo('/');
         } catch (error) {
-            if (error.hasOwnProperty('multiple') || error.multiple === false) {
+            if (!error.hasOwnProperty('multiple') || error.multiple === false) {
                 setFormStatus({ type: 'failed', payload: { message: error.message } });
             } else {
                 setFormStatus({ type: 'failed', payload: { message: error.message.split(' ') } });
