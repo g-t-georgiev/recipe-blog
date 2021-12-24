@@ -33,10 +33,9 @@ function Form({ name, title = 'Fill in the form below', schema, action, children
                 <legend className="form-title">{title}</legend>
                 {
                     (!formState.loading && formState.submitted && formState.response) 
-                    && 
-                    Array.isArray(formState.response)
-                        ? formState.response.map((error, i) => <span key={i} className="response-error">{error}</span>)
-                        : <span className="response-error">{formState.response}</span>
+                    && Array.isArray(formState.response)
+                    ? formState.response.map((error, i) => <span key={i} className="response-error">{error}</span>)
+                    : <span className="response-error">{formState.response}</span>
                 }
                 {children}
             </form>
