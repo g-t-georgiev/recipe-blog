@@ -4,7 +4,6 @@ import './FormButton.css';
 function FormButton({ type = 'submit', text = 'Submit' }) {
     const { 
         formState,
-        checkForErrors
     } = useFormContext();
 
     return (
@@ -12,7 +11,7 @@ function FormButton({ type = 'submit', text = 'Submit' }) {
             <button 
                 className="form-button" 
                 type={type} 
-                disabled={formState.loading || checkForErrors()}>
+                disabled={formState.loading}>
                 {formState.loading ? 'Loading...' : text}
             </button>
         </div>
