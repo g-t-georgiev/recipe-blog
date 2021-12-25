@@ -1,4 +1,4 @@
-export const validationSchema = {
+const inputSchema = {
     username: {
         minLength: {
             value: 3,
@@ -7,15 +7,11 @@ export const validationSchema = {
         maxLength: {
             value: 30,
             message: 'Username should be 30 characters long at maximum.',
-        },
-        match: {
-            value: /^(?![_.-\s])(?!.*[_.-\s]{2})[a-z0-9_.-]{3,30}(?<![_.-\s])$/i,
-            message: 'Username can contain letters, digits and a dot, an underscore or a hyphen as a separator.'
         }
     },
     email: {
         match: {
-            value: /^(?!\s+).+@.+(?<=\.[a-z]+)$/i,
+            value: /^(?![,\s]+).+@.+(?<![^a-z])$/i,
             message: 'Invalid email.'
         }
     },
@@ -27,10 +23,22 @@ export const validationSchema = {
         maxLength: {
             value: 20,
             message: 'Password should no more than 20 characters long.'
-        },
-        match: {
-            value: /^(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*#?&])[a-z0-9@$!%*#?&]{6,20}$/i,
-            message: 'Password should contain at least one letter, one digit and one of the following symbols @$!%*#?&'
         }
     }
 };
+
+const formSchema = {
+    loginForm: {
+        email: inputSchema.email,
+        password: inputSchema.password
+    },
+    registerForm: {
+        username: inputSchema.username,
+        email: inputSchema.email,
+        password: inputSchema.password
+    },
+};
+
+export function getValidationSchema(name) {
+    return formSchema[name];
+}
