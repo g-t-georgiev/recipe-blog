@@ -4,10 +4,9 @@ import { useFormState } from "../../../hooks/useFormState";
 import './Form.css';
 
 import { FormContext } from "../../../contexts/FormContext";
-import validator from './helpers/validateInput';
 
 function Form({ name, title = 'Fill in the form below', schema, action, children }) {
-    const { formState, setFormState } = useFormState();
+    const { checkForErrors, formState, ...updateFormState } = useFormState();
 
     const submitHandler = useCallback(function (e) {
         e.preventDefault();
@@ -16,19 +15,13 @@ function Form({ name, title = 'Fill in the form below', schema, action, children
         const form = e.currentTarget;
         const formData = Object.fromEntries(new FormData(form));
 
-        if (validator(formData, schema)
-                .map(check => {
-                    setFormState({ type: 'validate', payload: check });
-                    return check;
-                })
-                .some(check => !check.valid)
-        ) return;
+        if (checkForErrors()) return;
 
-        action.call(form, formData, setFormState);
+        action.call(form, formData, updateFormState);
     }, [setFormState, action, schema]);
 
     return (
-        <FormContext.Provider value={formState}>
+        <FormContext.Provider value={{ schema, checkForErrors, formState, updateFormState }}>
             <form className="form" name={name} autoComplete="off" onSubmit={submitHandler}>
                 <legend className="form-title">{title}</legend>
                 {
