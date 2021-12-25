@@ -1,43 +1,49 @@
-import { useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useFormContext } from '../../../contexts/FormContext';
 
 import './FormInput.css';
 
 import validator from '../form/helpers/validateInput';
 
+const initialState = {
+    message: '',
+    valid: false,
+    touched: false
+};
+
 function FormInput(props) {
-    const { 
-        schema,
-        checkForErrors,
-        updateFormState: {
-            updateFormErrorState
-        }
-    } = useFormContext();
+    const [inputState, setInputState] = useState(initialState);
+    const { schema } = useFormContext();
 
     const changeHandler = useCallback(function (e) {
-        let results = validator(props.name, e.currentTarget.value, schema);
-        updateFormErrorState(results);
-    }, [validator, updateFormErrorState]);
+        let message = validator(props.name, e.currentTarget.value, schema);
+
+        setInputState(function (state) {
+            return {
+                ...state,
+                valid: message.length === 0,
+                touched: true,
+                message
+            }
+        });
+    }, [props.name, schema]);
 
     return (
         <div className="form-row">
             <div className="input-field">
                 <label htmlFor={props.id}>
-                    <input className={`form-input ${checkForErrors(props.name) ? 'invalid' : ''}`} {...props} onChange={changeHandler} />
+                    <input className={`form-input ${inputState.touched && !inputState.valid ? 'invalid' : ''}`} {...props} onChange={changeHandler} />
                     <span id="label-text">
                         {props.placeholder}
                     </span>
                 </label>
             </div>
             {
-                checkForErrors(props.name, true, true)
-                    .map(
-                        (error, i) => (
-                            <span key={error.name + i} className="error-message">
-                                {error.message}
-                            </span>
-                        )
-                    )
+                inputState.touched &&
+                !inputState.valid &&
+                <span className="error-message">
+                    {inputState.message}
+                </span>
             }
         </div>
     );
