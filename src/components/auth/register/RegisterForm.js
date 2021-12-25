@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import * as authService from '../../../services/authService';
-import { validationSchema } from '../constants';
+import { getValidationSchema } from '../constants';
 
 import Form from '../../shared/form/Form';
 import FormInput from '../../shared/form-input/FormInput';
@@ -22,25 +22,21 @@ function RegisterForm() {
 
     const register = useCallback(async function (formData, updateFormState) {
         try {
-            updateFormState.updateFormLoadingState(true);
+            updateFormState(true);
             const [, controller] = await authService.register(formData.username, formData.email, formData.password);
 
-            updateFormState.updateFormLoadingState(false, true);
+            updateFormState(false, true);
 
             setRegisterRequest(controller);
 
             redirectTo('/users/login')
         } catch (error) {
-            if (!error.hasOwnProperty('multiple') || error.multiple === false) {
-                updateFormState.updateFormLoadingState(false, false, error.message);
-            } else {
-                updateFormState.updateFormLoadingState(false, false, error.message);
-            }
+            updateFormState(false, false, error.message, error?.multiple);
         }
     }, [redirectTo]);
 
     return (
-        <Form name="registerForm" title="Create new account" schema={validationSchema} action={register}>
+        <Form name="registerForm" title="Create new account" schema={getValidationSchema('registerForm')} action={register}>
             <FormInput type="text" name="username" id="username" placeholder="Username" />
             <FormInput type="text" name="email" id="email" placeholder="Email" />
             <FormInput type="password" name="password" id="password" placeholder="Password" />

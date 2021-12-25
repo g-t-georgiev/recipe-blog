@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../../contexts/AuthContext';
 
 import * as authService from '../../../services/authService';
-import { validationSchema } from '../constants';
+import { getValidationSchema } from '../constants';
 
 import Form from '../../shared/form/Form';
 import FormInput from '../../shared/form-input/FormInput';
@@ -24,7 +24,7 @@ function LoginForm() {
 
     const login = useCallback(async function (formData, updateFormState) {
         try {
-            updateFormState.updateFormLoadingState(true);
+            updateFormState(true);
     
             const [userData, controller] = await authService.login(formData.email, formData.password);
 
@@ -32,20 +32,16 @@ function LoginForm() {
 
             setLoginRequest(controller);
 
-            updateFormState.updateFormLoadingState(false, true);
+            updateFormState(false, true);
 
             redirectTo('/');
         } catch (error) {
-            if (!error.hasOwnProperty('multiple') || error.multiple === false) {
-                updateFormState.updateFormLoadingState(false, false, error.message);
-            } else {
-                updateFormState.updateFormLoadingState(false, false, error.message);
-            }
+            updateFormState(false, false, error.message, error?.multiple);
         }
     }, [redirectTo, signIn]);
 
     return (
-        <Form name="loginForm" title="Sign in to your account" schema={validationSchema} action={login}>
+        <Form name="loginForm" title="Sign in to your account" schema={getValidationSchema('loginForm')} action={login}>
             <FormInput type="text" name="email" id="email" placeholder="Email" />
             <FormInput type="password" name="password" id="password" placeholder="Password" />
             <FormButton text="Sign in" />
