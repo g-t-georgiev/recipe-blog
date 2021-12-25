@@ -12,6 +12,10 @@
     cursor: pointer;
 }
 
-.form-button[disabled]:hover {
+.form-button:disabled {
+    background-color: rgba(0,0,0,0.8);
+}
+
+.form-button:disabled:hover {
     cursor: not-allowed;
 }
