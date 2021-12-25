@@ -11,37 +11,41 @@ const checks = {
 };
 
 const checkSchemaConditions = function (fieldName, fieldValue, schema) {
+    let result = [];
+
     for (const check in schema[fieldName]) {
         if (!schema[fieldName].hasOwnProperty(check)) {
-            return;
+            break;
         }
 
         const condition = schema[fieldName][check];
         const isValid = checks[check](fieldValue, condition.value);
 
-        if (!isValid) {
-            return {
-                name: fieldName,
-                message: condition.message,
-                valid: false
-            };
-        }
+        result.push({
+            name: fieldName,
+            message: isValid ? null : condition.message,
+            valid: isValid
+        });
     }
 
-    return {
-        name: fieldName,
-        message: '',
-        valid: true
-    }
+    return result;
 }
 
-export default function validator(formData, schema) {
+export default function validator(fieldName, fieldValue, schema, formData = {}, checkOne = true) {
     const errors = [];
 
-    for (const fieldName in formData) {
-        const fieldValue = formData[fieldName];
+    for (fieldName in formData) {
+        if (checkOne) {
+            checkOne = false;
+        }
 
-        errors.push(checkSchemaConditions(fieldName, fieldValue, schema));
+        fieldValue = formData[fieldName];
+
+        errors.push(...checkSchemaConditions(fieldName, fieldValue, schema));
+    }
+
+    if (checkOne) {
+        errors.push(...checkSchemaConditions(fieldName, fieldValue, schema));
     }
 
     return errors;
