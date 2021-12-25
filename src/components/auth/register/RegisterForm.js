@@ -20,21 +20,21 @@ function RegisterForm() {
 
     const redirectTo = useNavigate();
 
-    const register = useCallback(async function (formData, setFormStatus) {
+    const register = useCallback(async function (formData, updateFormState) {
         try {
-            setFormStatus({ type: 'processing' });
+            updateFormState.updateFormLoadingState(true);
             const [, controller] = await authService.register(formData.username, formData.email, formData.password);
 
-            setFormStatus({ type: 'success' });
+            updateFormState.updateFormLoadingState(false, true);
 
             setRegisterRequest(controller);
 
             redirectTo('/users/login')
         } catch (error) {
             if (!error.hasOwnProperty('multiple') || error.multiple === false) {
-                setFormStatus({ type: 'failed', payload: { message: error.message } });
+                updateFormState.updateFormLoadingState(false, false, error.message);
             } else {
-                setFormStatus({ type: 'failed', payload: { message: error.message.split(' ') } });
+                updateFormState.updateFormLoadingState(false, false, error.message);
             }
         }
     }, [redirectTo]);

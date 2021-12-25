@@ -22,9 +22,9 @@ function LoginForm() {
 
     const redirectTo = useNavigate();
 
-    const login = useCallback(async function (formData, setFormStatus) {
+    const login = useCallback(async function (formData, updateFormState) {
         try {
-            setFormStatus({ type: 'processing' });
+            updateFormState.updateFormLoadingState(true);
     
             const [userData, controller] = await authService.login(formData.email, formData.password);
 
@@ -32,14 +32,14 @@ function LoginForm() {
 
             setLoginRequest(controller);
 
-            setFormStatus({ type: 'success' });
+            updateFormState.updateFormLoadingState(false, true);
 
             redirectTo('/');
         } catch (error) {
             if (!error.hasOwnProperty('multiple') || error.multiple === false) {
-                setFormStatus({ type: 'failed', payload: { message: error.message } });
+                updateFormState.updateFormLoadingState(false, false, error.message);
             } else {
-                setFormStatus({ type: 'failed', payload: { message: error.message.split(' ') } });
+                updateFormState.updateFormLoadingState(false, false, error.message);
             }
         }
     }, [redirectTo, signIn]);
