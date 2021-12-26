@@ -69,7 +69,7 @@ function Header() {
                                             <Link className="site-navigation-link" to={`/users/${user.id}/favorites`}>Favorites</Link>
                                             <Link className="site-navigation-link" to={`/users/${user.id}/recipes`}>My Recipes</Link>
                                             <Link className="site-navigation-link" to="/recipes/create">Add Recipe</Link>
-                                            <SignOutButton signOutAction={signOut}>Logout</SignOutButton>
+                                            <SignOutButton signOut={signOut}>Logout</SignOutButton>
                                         </>
                                     )
                                     : (
