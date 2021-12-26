@@ -133,6 +133,12 @@
     font-size: .8rem;
 }
 
+.default-text,
+.default-text:hover {
+    color: black;
+    cursor: default;
+}
+
 @media screen and (min-width: 600px) {
     .site-navigation-link {
         width: 50%;
