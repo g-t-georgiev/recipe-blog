@@ -1,14 +1,17 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from "react-router-dom";
-import { useAuthContext } from '../../contexts/AuthContext';
 
 import './Header.css';
+
+import { useAuthContext } from '../../contexts/AuthContext';
+import useFetch from '../../hooks/useFetch';
 
 import ToggleNavButton from "./ToggleNavButton/ToggleNavButton";
 import SignOutButton from './SignOutButton/SignOutButton';
 
 function Header() {
-    const [navState, setNavState] = useState({ opened: false });
+    const [ navState, setNavState ] = useState({ opened: false });
+    const [ categories, setCategories ] = useState([]);
     const { user, signOut } = useAuthContext();
 
     const openNav = useCallback(function (e) {
