@@ -9,21 +9,46 @@ import useFetch from '../../hooks/useFetch';
 import ToggleNavButton from "./ToggleNavButton/ToggleNavButton";
 import SignOutButton from './SignOutButton/SignOutButton';
 
+const initialNavState = { opened: true };
+const initialCategoryState = [];
+
 function Header() {
-    const [ navState, setNavState ] = useState({ opened: false });
-    const [ categories, setCategories ] = useState([]);
+    const [ navState, setNavState ] = useState(initialNavState);
+    const [ categories, setCategories ] = useState(initialCategoryState);
     const { user, signOut } = useAuthContext();
-    const { request, abort } = useFetch('get', '/data/categories', true);
+    const request = useFetch('get', '/data/categories', true);
 
     useEffect(function () {
-        request()
-            .then(categories => setCategories(state => ([ ...state, ...categories])))
+        const abortController = new AbortController();
+        let isActive = true;
+
+        request(null, abortController.signal)
+            .then(function (results) {
+                // console.log(results);
+                if (isActive) {
+                    setCategories(function (categoriesState) {
+                        let duplicate = categoriesState.some(function (current) {
+                            return results.some(x => x._id.toString() === current._id.toString())
+                        });
+
+                        if (!duplicate) {
+                            return [
+                                ...categoriesState,
+                                ...results
+                            ]
+                        }
+
+                        return categoriesState;
+                    });
+                }
+            })
             .catch(error => console.log(error));
 
         return function () {
-            abort();
+            isActive = false;
+            abortController.abort();
         };
-    }, [categories, request, abort]);
+    }, [request]);
 
     const openNav = useCallback(function (e) {
         if (navState.opened) {
