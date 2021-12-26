@@ -19,6 +19,8 @@ function Header() {
     const request = useFetch('get', '/data/categories', true);
 
     useEffect(function () {
+        // Create abort controller for aborting API requests on unmount
+        // Or add boolean variable as an indicator that clean up function has run to prevent state update
         const abortController = new AbortController();
         let isActive = true;
 
@@ -45,6 +47,8 @@ function Header() {
             .catch(error => console.log(error));
 
         return function () {
+            // Cancel requests
+            // Update active indicator signaling component is being unmounted
             isActive = false;
             abortController.abort();
         };
