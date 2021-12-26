@@ -1,14 +1,14 @@
+import { useCallback } from 'react';
+
 import { authHeaderName, apiUrl } from '../constants';
 import getAccessToken from '../services/getAccessToken';
 
 export default function useFetch(method = 'get', path = '', parseJSON = false, isAuthenticated = false) {
-    let controller = new AbortController();
-
-    const request = async function (payload = null) {
+    const request = useCallback(async function (payload = null, abortSignal = null) {
         const options = {
             method: method,
             headers: {},
-            signal: controller.signal
+            signal: abortSignal
         };
         
         if (['post', 'put'].includes(method)) {
@@ -34,12 +34,7 @@ export default function useFetch(method = 'get', path = '', parseJSON = false, i
         }
 
         return result;
-    };
+    }, [method, path, parseJSON, isAuthenticated]);
 
-    const abort = function () {
-        controller.abort();
-        controller = new AbortController();
-    };
-
-    return { request, abort };
+    return request;
 }
