@@ -19,9 +19,10 @@ function LoginForm({ action }) {
             const abortController = new AbortController();
             updateFormState(true);
             const userData = await action({ email: formData.email, password: formData.password }, abortController.signal);
+            // if operation has not finished abort it prevent memory leak.
+            abortController.abort();
             signIn(userData);
             updateFormState(false, true);
-            abortController.abort();
             redirectTo('/');
         } catch (error) {
             updateFormState(false, false, error.message, error?.multiple);

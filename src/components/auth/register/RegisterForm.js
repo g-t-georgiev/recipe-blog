@@ -16,8 +16,9 @@ function RegisterForm({ action }) {
             const abortController = new AbortController();
             updateFormState(true);
             await action({ username: formData.username, email: formData.email, password: formData.password }, abortController.signal);
-            updateFormState(false, true);
+            // if operation has not finished abort it prevent memory leak.
             abortController.abort();
+            updateFormState(false, true);
             redirectTo('/users/login')
         } catch (error) {
             updateFormState(false, false, error.message, error?.multiple);

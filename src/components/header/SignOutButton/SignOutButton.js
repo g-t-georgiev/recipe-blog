@@ -10,7 +10,10 @@ function SignOutButton({ signOut }) {
 
     const signOutHandler = useCallback(async function () {
         try {
-            await request();
+            const abortController = new AbortController();
+            await request(null, abortController.signal);
+            // if operation has not finished abort it prevent memory leak.
+            abortController.abort();
             signOut();
             redirectTo('/');
         } catch (error) {
