@@ -13,6 +13,17 @@ function Header() {
     const [ navState, setNavState ] = useState({ opened: false });
     const [ categories, setCategories ] = useState([]);
     const { user, signOut } = useAuthContext();
+    const { request, abort } = useFetch('get', '/data/categories', true);
+
+    useEffect(function () {
+        request()
+            .then(categories => setCategories(state => ([ ...state, ...categories])))
+            .catch(error => console.log(error));
+
+        return function () {
+            abort();
+        };
+    }, [categories, request, abort]);
 
     const openNav = useCallback(function (e) {
         if (navState.opened) {
@@ -52,12 +63,13 @@ function Header() {
                         <span className="dropdown-links">
                             <Link className="site-navigation-link" to="/recipes">Browse All</Link>
                             <span className="dropdown-section-title">Categories</span>
-                            <Link className="site-navigation-link" to="/recipes?category=breakfast">Breakfast</Link>
-                            <Link className="site-navigation-link" to="/recipes?category=lunch">Lunch</Link>
-                            <Link className="site-navigation-link" to="/recipes?category=dinner">Dinner</Link>
-                            <Link className="site-navigation-link" to="/recipes?category=pasta">Pasta</Link>
-                            <Link className="site-navigation-link" to="/recipes?category=pizza">Pizza</Link>
-                            <Link className="site-navigation-link" to="/recipes?category=dessert">Dessert</Link>
+                            {
+                                categories.length > 0
+                                ? categories.map(category => (
+                                    <Link className="site-navigation-link" to={`/recipes?category="${category.title.toLowerCase()}"`}>{category.title}</Link>
+                                ))
+                                : <span className="site-navigation-link default-text">No categories</span>
+                            }
                         </span>
                     </span>
 
