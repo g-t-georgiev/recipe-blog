@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../../contexts/AuthContext';
 
@@ -12,24 +12,16 @@ import FormFooter from '../../shared/form-footer/FormFooter';
 function LoginForm({ action }) {
     const { signIn } = useAuthContext();
 
-    useEffect(function () {
-        return function () {
-            action.abort();
-        };
-    }, [action]);
-
     const redirectTo = useNavigate();
 
     const login = useCallback(async function (formData, updateFormState) {
         try {
+            const abortController = new AbortController();
             updateFormState(true);
-            
-            const userData = await action.request({ email: formData.email, password: formData.password });
-
+            const userData = await action({ email: formData.email, password: formData.password }, abortController.signal);
             signIn(userData);
-            
             updateFormState(false, true);
-
+            abortController.abort();
             redirectTo('/');
         } catch (error) {
             updateFormState(false, false, error.message, error?.multiple);

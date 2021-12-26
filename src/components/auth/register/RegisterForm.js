@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getValidationSchema } from '../constants';
@@ -9,19 +9,15 @@ import FormButton from '../../shared/form-button/FormButton';
 import FormFooter from '../../shared/form-footer/FormFooter';
 
 function RegisterForm({ action }) {
-    useEffect(function () {
-        return function () {
-            action.abort();
-        };
-    }, [action]);
-
     const redirectTo = useNavigate();
 
     const register = useCallback(async function (formData, updateFormState) {
         try {
+            const abortController = new AbortController();
             updateFormState(true);
-            await action.request({ username: formData.username, email: formData.email, password: formData.password });
+            await action({ username: formData.username, email: formData.email, password: formData.password }, abortController.signal);
             updateFormState(false, true);
+            abortController.abort();
             redirectTo('/users/login')
         } catch (error) {
             updateFormState(false, false, error.message, error?.multiple);
