@@ -66,7 +66,7 @@ function Header() {
                             {
                                 categories.length > 0
                                 ? categories.map(category => (
-                                    <Link className="site-navigation-link" to={`/recipes?category="${category.title.toLowerCase()}"`}>{category.title}</Link>
+                                    <Link key={category._id} className="site-navigation-link" to={`/recipes?category="${category.title.toLowerCase()}"`}>{category.title}</Link>
                                 ))
                                 : <span className="site-navigation-link default-text">No categories</span>
                             }
