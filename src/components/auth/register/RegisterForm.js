@@ -1,7 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import * as authService from '../../../services/authService';
 import { getValidationSchema } from '../constants';
 
 import Form from '../../shared/form/Form';
@@ -9,31 +8,25 @@ import FormInput from '../../shared/form-input/FormInput';
 import FormButton from '../../shared/form-button/FormButton';
 import FormFooter from '../../shared/form-footer/FormFooter';
 
-function RegisterForm() {
-    const [ registerRequest, setRegisterRequest ] = useState(null);
-
+function RegisterForm({ action }) {
     useEffect(function () {
         return function () {
-            registerRequest?.abort();
+            action.abort();
         };
-    }, [registerRequest]);
+    }, [action]);
 
     const redirectTo = useNavigate();
 
     const register = useCallback(async function (formData, updateFormState) {
         try {
             updateFormState(true);
-            const [, controller] = await authService.register(formData.username, formData.email, formData.password);
-
+            await action.request({ username: formData.username, email: formData.email, password: formData.password });
             updateFormState(false, true);
-
-            setRegisterRequest(controller);
-
             redirectTo('/users/login')
         } catch (error) {
             updateFormState(false, false, error.message, error?.multiple);
         }
-    }, [redirectTo]);
+    }, [redirectTo, action]);
 
     return (
         <Form name="registerForm" title="Create new account" schema={getValidationSchema('registerForm')} action={register}>

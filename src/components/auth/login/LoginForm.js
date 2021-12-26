@@ -1,8 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../../contexts/AuthContext';
 
-import * as authService from '../../../services/authService';
 import { getValidationSchema } from '../constants';
 
 import Form from '../../shared/form/Form';
@@ -10,35 +9,32 @@ import FormInput from '../../shared/form-input/FormInput';
 import FormButton from '../../shared/form-button/FormButton';
 import FormFooter from '../../shared/form-footer/FormFooter';
 
-function LoginForm() {
+function LoginForm({ action }) {
     const { signIn } = useAuthContext();
-    const [ loginRequest, setLoginRequest] = useState(null);
 
     useEffect(function () {
         return function () {
-            loginRequest?.abort();
+            action.abort();
         };
-    }, [loginRequest]);
+    }, [action]);
 
     const redirectTo = useNavigate();
 
     const login = useCallback(async function (formData, updateFormState) {
         try {
             updateFormState(true);
-    
-            const [userData, controller] = await authService.login(formData.email, formData.password);
+            
+            const userData = await action.request({ email: formData.email, password: formData.password });
 
             signIn(userData);
-
-            setLoginRequest(controller);
-
+            
             updateFormState(false, true);
 
             redirectTo('/');
         } catch (error) {
             updateFormState(false, false, error.message, error?.multiple);
         }
-    }, [redirectTo, signIn]);
+    }, [redirectTo, signIn, action]);
 
     return (
         <Form name="loginForm" title="Sign in to your account" schema={getValidationSchema('loginForm')} action={login}>
