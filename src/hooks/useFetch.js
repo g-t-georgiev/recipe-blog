@@ -26,7 +26,7 @@ const reducer = function (state, { type, payload }) {
     }
 };
 
-export default function useFetch(path = '', isAuthenticated = false) {
+export default function useFetch(path = '', isAuthenticated = false, cacheData = true) {
     const cache = useRef({});
     const [ state, dispatch ] = useReducer(reducer, initialState);
 
@@ -57,7 +57,7 @@ export default function useFetch(path = '', isAuthenticated = false) {
                 return response.json();
             })
             .then(data => {
-                cache.current[path] = data;
+                if (cacheData) cache.current[path] = data;
                 dispatch({ type: 'FETCHED', payload: data });
             })
             .catch(error => {
