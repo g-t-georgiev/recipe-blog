@@ -3,11 +3,11 @@ import RegisterForm from './RegisterForm';
 import useFetch from '../../../hooks/useFetch';
 
 function Register() {
-    const request = useFetch('post', '/auth/register');
+    const action = useFetch('post', '/auth/register');
 
     return (
         <section>
-            <RegisterForm action={request} />
+            <RegisterForm action={action} />
         </section>
     );
 }
