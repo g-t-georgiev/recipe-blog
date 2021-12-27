@@ -1,54 +1,74 @@
-import { useState, useCallback } from 'react';
+import { useReducer, useRef, useEffect } from 'react';
 
 import { authHeaderName, apiUrl } from '../constants';
 import getAccessToken from '../services/getAccessToken';
 
-const initialControllerState = new AbortController();
+const initialState = {
+    status: 'idle',
+    error: null,
+    data: null
+};
 
-export default function useFetch(method = 'get', path = '', parseJSON = false, isAuthenticated = false) {
-    const [ controller ] = useState(function () {
-        if (controller.aborted) {
-            return new AbortController();
-        } else {
-            return initialControllerState;
+const reducer = function (state, { type, payload }) {
+    switch (type) {
+        case 'FETCHING': {
+            return { ...state, status: 'fetching' };
         }
-    });
+        case 'FETCHED': {
+            return { ...state, status: 'fetched', data: payload };
+        }
+        case 'FETCH_ERROR': {
+            return { ...state, status: 'error', data: payload };
+        }
+        default: {
+            return state;
+        }
+    }
+};
 
-    const request = useCallback(async function (payload = null) {
-        const options = {
-            method: method,
-            headers: {},
-            signal: controller.signal
+export default function useFetch(path = '', isAuthenticated = false) {
+    const cache = useRef({});
+    const [ state, dispatch ] = useReducer(reducer, initialState);
+
+    useEffect(function () {
+        let abortRequest = false;
+        if (!path || typeof(path) !== 'string') return;
+
+        dispatch({ type: 'FETCHING' });
+
+        if (cache.current[path]) {
+            const data = cache.current[path];
+            dispatch({ type: 'FETCHED', payload: data });
+            return;
+        }
+
+        const headers = isAuthenticated
+            ? { headers: { 
+                [authHeaderName]: `Bearer ${getAccessToken()}` 
+            } }
+            : null;
+
+        fetch(apiUrl + path, headers)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error fetching data.');
+                }
+
+                return response.json();
+            })
+            .then(data => {
+                cache.current[path] = data;
+                dispatch({ type: 'FETCHED', payload: data });
+            })
+            .catch(error => {
+                if (abortRequest) return;
+                dispatch({ type: 'FETCH_ERROR', payload: error.message });
+            });
+
+        return function () {
+            abortRequest = true;
         };
-        
-        if (['post', 'put'].includes(method)) {
-            options.headers['Content-Type'] = 'application/json';
-            options.body = JSON.stringify(payload);
-        }
+    }, [path, isAuthenticated]);
 
-        if (isAuthenticated) {
-            options.headers[authHeaderName] = 'Bearer ' + getAccessToken() ?? '';
-        }
-
-        const response = await fetch(apiUrl + path, method !== 'get' ? options : null);
-
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.message);
-        }
-
-        let result = null;
-
-        if (parseJSON) {
-            result = await response.json();
-        }
-
-        return result;
-    }, [method, path, parseJSON, isAuthenticated]);
-
-    const abort = useCallback(function () {
-        controller.abort();
-    }, [controller]);
-
-    return { request, abort };
+    return state;
 }
