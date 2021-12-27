@@ -21,7 +21,7 @@ function useAuthActions() {
     const logout = useCallback(async function () {
         await authService.logout();
         signOut();
-        return () => redirectTo('/', { replace: true });
+        return () => redirectTo('/');
     }, [signOut, redirectTo]);
 
     return { login, register, logout };
