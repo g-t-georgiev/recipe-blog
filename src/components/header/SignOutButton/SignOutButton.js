@@ -5,15 +5,14 @@ import './SignOutButton.css';
 import useFetch from '../../../hooks/useFetch';
 
 function SignOutButton({ signOut }) {
-    const request = useFetch('delete', '/auth/logout', false, true);
+    const action = useFetch('delete', '/auth/logout', false, true);
     const redirectTo = useNavigate();
 
     const signOutHandler = useCallback(async function () {
         try {
-            const abortController = new AbortController();
-            await request(null, abortController.signal);
+            await action.request();
             // if operation has not finished abort it prevent memory leak.
-            abortController.abort();
+            action.abort();
             signOut();
             redirectTo('/');
         } catch (error) {
