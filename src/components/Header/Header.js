@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Link } from "react-router-dom";
 
 import './Header.css';
@@ -10,49 +10,11 @@ import ToggleNavButton from "./ToggleNavButton/ToggleNavButton";
 import SignOutButton from './SignOutButton/SignOutButton';
 
 const initialNavState = { opened: true };
-const initialCategoryState = [];
 
 function Header() {
-    const [ navState, setNavState ] = useState(initialNavState);
-    const [ categories, setCategories ] = useState(initialCategoryState);
-    const { user, signOut } = useAuthContext();
-    const request = useFetch('get', '/data/categories', true);
-
-    useEffect(function () {
-        // Create abort controller for aborting API requests on unmount
-        // Or add boolean variable as an indicator that clean up function has run to prevent state update
-        const abortController = new AbortController();
-        let isActive = true;
-
-        request(null, abortController.signal)
-            .then(function (results) {
-                // console.log(results);
-                if (isActive) {
-                    setCategories(function (categoriesState) {
-                        let duplicate = categoriesState.some(function (current) {
-                            return results.some(x => x._id.toString() === current._id.toString())
-                        });
-
-                        if (!duplicate) {
-                            return [
-                                ...categoriesState,
-                                ...results
-                            ]
-                        }
-
-                        return categoriesState;
-                    });
-                }
-            })
-            .catch(error => console.log(error));
-
-        return function () {
-            // Cancel requests
-            // Update active indicator signaling component is being unmounted
-            isActive = false;
-            abortController.abort();
-        };
-    }, [request]);
+    const [navState, setNavState] = useState(initialNavState);
+    const categories = useFetch('/data/categories');
+    const { user } = useAuthContext();
 
     const openNav = useCallback(function (e) {
         if (navState.opened) {
@@ -86,18 +48,26 @@ function Header() {
                 <ToggleNavButton openNavHandler={openNav} />
                 <section className={`site-navigation-links ${navState.opened ? 'opened' : 'closed'}`} onMouseUp={closeNav}>
                     <Link className="site-navigation-link" to="/">Home</Link>
-                    
+
                     <span className="dropdown">
                         <span className="dropdown-title">Recipes</span>
                         <span className="dropdown-links">
                             <Link className="site-navigation-link" to="/recipes">Browse All</Link>
                             <span className="dropdown-section-title">Categories</span>
                             {
-                                categories.length > 0
-                                ? categories.map(category => (
-                                    <Link key={category._id} className="site-navigation-link" to={`/recipes?category="${category.title.toLowerCase()}"`}>{category.title}</Link>
-                                ))
+                                categories.status === 'fetched'
+                                ? Array.isArray(categories.data) && categories.data.length > 0
+                                ? categories.data.map(category => <Link key={category._id} className="site-navigation-link" to={`/recipes?category="${category.title.toLowerCase()}"`}>{category.title}</Link>)
                                 : <span className="site-navigation-link default-text">No categories</span>
+                                : <span className="site-navigation-link default-text">
+                                    {
+                                        ['idle', 'fetching'].includes(categories.status)
+                                        ? 'Loading...'
+                                        : categories.status === 'error'
+                                        ? 'Error loading categories'
+                                        : 'N/A'
+                                    }
+                                </span>
                             }
                         </span>
                     </span>
@@ -113,7 +83,7 @@ function Header() {
                                             <Link className="site-navigation-link" to={`/users/${user.id}/favorites`}>Favorites</Link>
                                             <Link className="site-navigation-link" to={`/users/${user.id}/recipes`}>My Recipes</Link>
                                             <Link className="site-navigation-link" to="/recipes/create">Add Recipe</Link>
-                                            <SignOutButton signOut={signOut}>Logout</SignOutButton>
+                                            <SignOutButton>Logout</SignOutButton>
                                         </>
                                     )
                                     : (
