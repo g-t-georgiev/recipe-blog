@@ -1,27 +1,19 @@
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+
+import useAuthActions from '../../../hooks/useAuthActions';
+
 import './SignOutButton.css';
 
-import useFetch from '../../../hooks/useFetch';
+function SignOutButton() {
+    const authActions = useAuthActions();
 
-function SignOutButton({ signOut }) {
-    const action = useFetch('delete', '/auth/logout', false, true);
-    const redirectTo = useNavigate();
+    const clickHandler = useCallback(function () {
+        authActions.logout()
+            .then(redirectHandler => redirectHandler())
+            .catch(error => console.log('Error signing out: ' + error.message));
+    }, [authActions]);
 
-    const signOutHandler = useCallback(async function () {
-        try {
-            await action.request();
-            // if operation has not finished abort it prevent memory leak.
-            action.abort();
-            signOut();
-            redirectTo('/');
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
-    }, [request, signOut, redirectTo]);
-
-    return <button className="site-navigation-link logout" onClick={signOutHandler}>Logout</button>
+    return <button onClick={clickHandler} className="site-navigation-link logout">Logout</button>
 }
 
 export default SignOutButton;
