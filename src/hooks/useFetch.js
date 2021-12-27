@@ -1,14 +1,24 @@
-import { useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 import { authHeaderName, apiUrl } from '../constants';
 import getAccessToken from '../services/getAccessToken';
 
+const initialControllerState = new AbortController();
+
 export default function useFetch(method = 'get', path = '', parseJSON = false, isAuthenticated = false) {
-    const request = useCallback(async function (payload = null, abortSignal = null) {
+    const [ controller ] = useState(function () {
+        if (controller.aborted) {
+            return new AbortController();
+        } else {
+            return initialControllerState;
+        }
+    });
+
+    const request = useCallback(async function (payload = null) {
         const options = {
             method: method,
             headers: {},
-            signal: abortSignal
+            signal: controller.signal
         };
         
         if (['post', 'put'].includes(method)) {
@@ -36,5 +46,9 @@ export default function useFetch(method = 'get', path = '', parseJSON = false, i
         return result;
     }, [method, path, parseJSON, isAuthenticated]);
 
-    return request;
+    const abort = useCallback(function () {
+        controller.abort();
+    }, [controller]);
+
+    return { request, abort };
 }
