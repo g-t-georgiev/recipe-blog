@@ -1,31 +1,17 @@
-import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import { getValidationSchema } from '../constants';
+import useAuthActions from '../../../hooks/useAuthActions';
 
 import Form from '../../shared/form/Form';
 import FormInput from '../../shared/form-input/FormInput';
 import FormButton from '../../shared/form-button/FormButton';
 import FormFooter from '../../shared/form-footer/FormFooter';
 
-function RegisterForm({ action }) {
-    const redirectTo = useNavigate();
+import { getValidationSchema } from '../constants';
 
-    const register = useCallback(async function (formData, updateFormState) {
-        try {
-            updateFormState(true);
-            await action.request({ username: formData.username, email: formData.email, password: formData.password });
-            // if operation has not finished abort it prevent memory leak.
-            action.abort();
-            updateFormState(false, true);
-            redirectTo('/users/login')
-        } catch (error) {
-            updateFormState(false, false, error.message, error?.multiple);
-        }
-    }, [redirectTo, action]);
+function RegisterForm() {
+    const authActions = useAuthActions();
 
     return (
-        <Form name="registerForm" title="Create new account" schema={getValidationSchema('registerForm')} action={register}>
+        <Form name="registerForm" title="Create new account" schema={getValidationSchema('registerForm')} action={authActions.register} redirect={true}>
             <FormInput type="text" name="username" id="username" placeholder="Username" />
             <FormInput type="text" name="email" id="email" placeholder="Email" />
             <FormInput type="password" name="password" id="password" placeholder="Password" />
