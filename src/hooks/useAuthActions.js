@@ -10,7 +10,7 @@ function useAuthActions() {
     const login = useCallback(async function ({ email, password }) {
         const userData = await authService.login(email, password);
         signIn(userData);
-        return () => redirectTo('/');
+        return () => redirectTo('/', { replace: true });
     }, [signIn, redirectTo]);
 
     const register = useCallback(async function ({ username, email, password }) {
@@ -21,7 +21,7 @@ function useAuthActions() {
     const logout = useCallback(async function () {
         await authService.logout();
         signOut();
-        return () => redirectTo('/');
+        return () => redirectTo('/', { replace: true });
     }, [signOut, redirectTo]);
 
     return { login, register, logout };
