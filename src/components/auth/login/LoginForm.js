@@ -16,11 +16,10 @@ function LoginForm({ action }) {
 
     const login = useCallback(async function (formData, updateFormState) {
         try {
-            const abortController = new AbortController();
             updateFormState(true);
-            const userData = await action({ email: formData.email, password: formData.password }, abortController.signal);
+            const userData = await action.request({ email: formData.email, password: formData.password });
             // if operation has not finished abort it prevent memory leak.
-            abortController.abort();
+            action.abort();
             signIn(userData);
             updateFormState(false, true);
             redirectTo('/');

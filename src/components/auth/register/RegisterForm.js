@@ -13,11 +13,10 @@ function RegisterForm({ action }) {
 
     const register = useCallback(async function (formData, updateFormState) {
         try {
-            const abortController = new AbortController();
             updateFormState(true);
-            await action({ username: formData.username, email: formData.email, password: formData.password }, abortController.signal);
+            await action.request({ username: formData.username, email: formData.email, password: formData.password });
             // if operation has not finished abort it prevent memory leak.
-            abortController.abort();
+            action.abort();
             updateFormState(false, true);
             redirectTo('/users/login')
         } catch (error) {
