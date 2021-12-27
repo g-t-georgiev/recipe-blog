@@ -31,7 +31,9 @@ export default function useFetch(path = '', isAuthenticated = false, cacheData =
     const [ state, dispatch ] = useReducer(reducer, initialState);
 
     useEffect(function () {
+        let abortController = new AbortController();
         let abortRequest = false;
+
         if (!path || typeof(path) !== 'string') return;
 
         dispatch({ type: 'FETCHING' });
@@ -42,11 +44,16 @@ export default function useFetch(path = '', isAuthenticated = false, cacheData =
             return;
         }
 
-        const headers = isAuthenticated
-            ? { headers: { 
-                [authHeaderName]: `Bearer ${getAccessToken()}` 
-            } }
-            : null;
+        const headers = { 
+            headers: { 
+                signal: abortController.signal,
+                ...(isAuthenticated
+                ? { [authHeaderName]: `Bearer ${getAccessToken()}` }
+                : {})
+            } 
+        };
+
+        if (!abortController.signal.aborted) return;
 
         fetch(apiUrl + path, headers)
             .then(response => {
@@ -67,6 +74,7 @@ export default function useFetch(path = '', isAuthenticated = false, cacheData =
 
         return function () {
             abortRequest = true;
+            abortController.abort();
         };
     }, [path, isAuthenticated]);
 
