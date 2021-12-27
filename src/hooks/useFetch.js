@@ -53,7 +53,7 @@ export default function useFetch(path = '', isAuthenticated = false, cacheData =
             } 
         };
 
-        if (!abortController.signal.aborted) return;
+        if (abortController.signal.aborted) return;
 
         fetch(apiUrl + path, headers)
             .then(response => {
@@ -76,7 +76,7 @@ export default function useFetch(path = '', isAuthenticated = false, cacheData =
             abortRequest = true;
             abortController.abort();
         };
-    }, [path, isAuthenticated]);
+    }, [path, isAuthenticated, cacheData]);
 
     return state;
 }
