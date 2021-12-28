@@ -22,7 +22,7 @@ function Favorites() {
                             : (
                                 <section className="info-box">
                                     <h3>No recipes to show</h3>
-                                    <p>Contribute by <Link to="/recipes/create">adding</Link> some of yours.</p>
+                                    <p>Start <Link to="/recipes">browsing</Link> our recipes blog.</p>
                                 </section>
                             )
                         : ['idle', 'fetching'].includes(recipes.status)
