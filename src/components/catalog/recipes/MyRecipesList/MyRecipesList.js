@@ -6,7 +6,7 @@ import RecipeCard from '../RecipeCard/RecipeCard';
 
 import './MyRecipesList.css';
 
-function MyRecipesList(props) {
+function MyRecipesList() {
     const { userId } = useParams();
     const recipes = useFetch(`/users/${userId}/recipes`, true);
 
