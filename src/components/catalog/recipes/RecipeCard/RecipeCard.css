@@ -1,44 +1,173 @@
 .recipe {
     display: inline-block;
-    margin: 2% 1%;
-    padding: 2% 1%;
     width: 100%;
+    margin-bottom: 15%;
+    border: 1px solid black;
+    text-align: left;
 }
 
 .recipe-image {
-    width: 10%;
     display: flow-root;
 }
 
+.recipe-image img {
+    max-width: 100%;
+}
+
 .recipe-info {
-    padding: 3% 2%;
-    border-bottom: 1px solid black;
+    height: 100%;
+    padding: 2% 3%;
 }
 
 .recipe-title {
     text-transform: uppercase;
+    margin: 1% 0;
+}
+
+.recipe-category {
+    margin: 1% 0;
+}
+
+.recipe-author {
+    margin: 1% 0;
+}
+
+.recipe-details-button {
+    display: block;
+    width: 45%;
+    border: 0;
+    margin: 5% auto 0;
+    padding: 3% 2%;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+@media screen and (min-width: 400px) {
+    .recipe {
+        width: 80%;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-bottom: 10%;
+    }
+
+    .recipe-details-button {
+        width: 65%;
+        padding: 3% 2%;
+    }
+}
+
+@media screen and (min-width: 500px) {
+    .recipe {
+        width: 70%;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-bottom: 10%;
+    }
+
+    .recipe-details-button {
+        width: 65%;
+        padding: 3% 2%;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .recipe {
+        width: 60%;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-bottom: 10%;
+    }
+
+    .recipe-details-button {
+        width: 65%;
+        padding: 3% 2%;
+    }
 }
 
 @media screen and (min-width: 700px) {
     .recipe {
-        width: 50%;
+        position: relative;
+        width: 45%;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-bottom: 5%;
+    }
+
+    .recipe-info {
+        display: none;
+        width: 100%;
+        background-color: rgba(245, 245, 245, .8);
+        transition: all 0.3s;
+    }
+
+    .recipe:hover {
+        border-color: rgba(0, 0, 0, .3);
+    }
+
+    .recipe:hover .recipe-info {
+        display: block;
+        position: absolute;
+        top: 0;
+    }
+
+    .recipe-details-button {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 5% 3%;
     }
 }
 
 @media screen and (min-width: 900px) {
     .recipe {
+        width: 35%;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-bottom: 5%;
+    }
+}
+
+@media screen and (min-width: 1150px) {
+    .recipe {
         width: 30%;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-bottom: 5%;
     }
 }
 
 @media screen and (min-width: 1200px) {
     .recipe {
-        width: 20%;
+        width: 25%;
+        margin-left: 4%;
+        margin-right: 4%;
+        margin-bottom: 3%
     }
 }
 
-@media screen and (min-width: 1500px) {
+@media screen and (min-width: 1200px) {
     .recipe {
-        width: 15%;
+        width: 25%;
+        margin-left: 4%;
+        margin-right: 4%;
+        margin-bottom: 3%;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .recipe {
+        width: 20%;
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+}
+
+@media screen and (min-width: 1700px) {
+    .recipe {
+        width: 20%;
+        margin-left: 2%;
+        margin-right: 2%;
     }
 }
