@@ -1,0 +1,49 @@
+.input-field {
+    position: relative;
+}
+
+#label-text {
+    position: absolute;
+    top: 3%;
+    left: 2%;
+    display: inline-block;
+    padding: 3% 2%;
+    font-size: 1rem;
+    background-color: transparent;
+    color: darkgray;
+    transition: all 0.3s;
+}
+
+.form-select {
+    width: 100%;
+    padding: 3% 1%;
+    border-width: 2px;
+    border-style: solid;
+    border-color: darkgray;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: white;
+    transition: border-color .3s;
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: black;
+}
+
+.form-select:disabled {
+    background-color: lightgray;
+}
+
+.form-select.no-float ~ #label-text,
+.form-select:focus ~ #label-text {
+    top: -25%;
+    padding: 1%;
+    font-size: .7rem;
+    background-color: white;
+    color: black;
+}
+
+.form-select:disabled ~ #label-text {
+    display: none;
+}
