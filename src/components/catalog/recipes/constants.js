@@ -20,8 +20,9 @@ export const validationSchema = {
         }
     },
     category: {
-        required: {
-            message: 'Choose a category from drop down list.'
+        includes: {
+            value: ['Breakfast', 'Dinner', 'Dessert'],
+            message: 'Invalid category.'
         }
     },
     imageUrl: {
