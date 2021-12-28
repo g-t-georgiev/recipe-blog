@@ -1,8 +1,9 @@
 .recipe-list {
-    display: flex;
+    display: flow-root;
     padding: 5% 2%;
     margin-top: 15%;
     margin-bottom: 15%;
+    text-align: left;
 }
 
 .info-box {
