@@ -5,17 +5,25 @@ import * as recipeService from '../services/recipeService';
 function useRecipeActions() {
     const redirectTo = useNavigate();
 
-    const create = useCallback(function ({ title, description, category, imageUrl}) {
+    const create = useCallback(async function ({ title, description, category, imageUrl}) {
+        title = title.toLowerCase();
+        category = category.toLowerCase();
+        imageUrl = imageUrl.toLowerCase();
+
         await recipeService.create(title, description, category, imageUrl);
         return () => redirectTo('/recipes');
     }, [redirectTo]);
 
-    const update = useCallback(function (recipeId, { title, description, category, imageUrl }) {
+    const update = useCallback(async function (recipeId, { title, description, category, imageUrl }) {
+        title = title.toLowerCase();
+        category = category.toLowerCase();
+        imageUrl = imageUrl.toLowerCase();
+        
         await recipeService.update(recipeId, title, description, category, imageUrl);
         return () => redirectTo(`/recipes/${recipeId}`);
     }, [redirectTo]);
 
-    const remove = useCallback(function (recipeId) {
+    const remove = useCallback(async function (recipeId) {
         await recipeService.remove(recipeId);
         return () => redirectTo('/recipes', { replace: true });
     }, [redirectTo]);
