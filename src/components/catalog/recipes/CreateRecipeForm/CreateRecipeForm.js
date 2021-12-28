@@ -1,15 +1,56 @@
+import useFetch from '../../../../hooks/useFetch';
+
 import Form from '../../../shared/form/Form';
 import FormInput from '../../../shared/form-input/FormInput';
+import FormSelect from '../../../shared/form-select/FormSelect';
 import FormButton from '../../../shared/form-button/FormButton';
 
 import { validationSchema } from '../constants';
 
 function CreateRecipeForm() {
+    const categories = useFetch('/data/categories');
+
     return (
         <Form name="recipeForm" title="Create new recipe" schema={validationSchema} redirect={true}>
             <FormInput type="text" name="title" id="title" placeholder="Title" />
             <FormInput type="text" name="description" id="description" placeholder="Description" />
-            {/* <FormInput type="text" name="category" id="category" placeholder="Category" /> */}
+            {
+                categories.status === 'fetched'
+                ? Array.isArray(categories.data) && categories.data.length > 0
+                ? <FormSelect 
+                    name="category" 
+                    id="category" 
+                    placeholder="Category"
+                    options={
+                        categories.data.map(
+                            ({ title, _id }) => ({ value: title, id: _id })
+                        )
+                    } 
+                />
+                : <FormInput 
+                    name="category" 
+                    id="category" 
+                    placeholder="Category" 
+                    defaultValue="No categories"
+                    disabled={true} 
+                />
+                : ['idle', 'fetching'].includes(categories.status)
+                ? <FormInput 
+                    name="category" 
+                    id="category" 
+                    placeholder="Category" 
+                    defaultValue="Loading categories"
+                    disabled={true}
+                />
+                : <FormInput 
+                    name="category" 
+                    id="category" 
+                    placeholder="Category" 
+                    defaultValue="Error loading categories" 
+                    disabled={true}
+                />
+            }
+            
             <FormInput type="text" name="imageUrl" id="image" placeholder="Image" />
             <FormButton text="Create" />
         </Form>
