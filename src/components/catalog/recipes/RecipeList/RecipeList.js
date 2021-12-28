@@ -26,7 +26,7 @@ function RecipeList() {
         <>
             {
                 recipes.status === 'fetched'
-                ? recipes.data && recipes.data.length > 0
+                ? Array.isArray(recipes.data) && recipes.data.length > 0
                 ? <ul>{recipes.data.map(recipe => <li key={recipe._id}>{recipe.title}</li>)}</ul>
                 : <section>
                     <h3>No recipes to show</h3>
