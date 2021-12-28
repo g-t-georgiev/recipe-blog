@@ -5,6 +5,8 @@ import useFetch from '../../../../hooks/useFetch';
 
 import RecipeCard from '../RecipeCard/RecipeCard';
 
+import './RecipeList.css';
+
 function RecipeList(props) {
     const [ searchParams, setSearchParams ] = useSearchParams();
     const path = useMemo(function () {
@@ -25,17 +27,17 @@ function RecipeList(props) {
                 ? Array.isArray(recipes.data) && recipes.data.length > 0
                 ? recipes.data.map(recipe => <RecipeCard key={recipe._id} data={recipe} />)
                 : (
-                    <>
+                    <section className="info-box">
                         <h3>No recipes to show</h3>
                         <p>Contribute by <Link to="/recipes/create">adding</Link> some of yours.</p>
-                    </>
+                    </section>
                 )
                 : ['idle', 'fetching'].includes(recipes.status)
                 ? (
-                    <>
+                    <section className="info-box">
                         <h3>Loading...</h3>
                         <p>Please, wait. We are fetching some data for you.</p>
-                    </>
+                    </section>
                 )
                 : (
                     <>
