@@ -57,7 +57,7 @@ function Header() {
                             {
                                 categories.status === 'fetched'
                                 ? Array.isArray(categories.data) && categories.data.length > 0
-                                ? categories.data.map(category => <Link key={category._id} className="site-navigation-link" to={`/recipes?category="${category.title.toLowerCase()}"`}>{category.title}</Link>)
+                                ? categories.data.map(category => <Link key={category._id} className="site-navigation-link" to={`/recipes?category=${category.title.toLowerCase()}`}>{category.title}</Link>)
                                 : <span className="site-navigation-link default-text">No categories</span>
                                 : <span className="site-navigation-link default-text">
                                     {
