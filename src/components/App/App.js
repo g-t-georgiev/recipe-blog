@@ -11,6 +11,7 @@ import Login from '../auth/login/Login';
 import Register from '../auth/register/Register';
 import Recipes from '../catalog/recipes/Recipes';
 import RecipeList from '../catalog/recipes/RecipeList/RecipeList';
+import CreateRecipeForm from '../catalog/recipes/CreateRecipeForm/CreateRecipeForm';
 
 function App() {
 	return (
@@ -23,6 +24,7 @@ function App() {
 							<Route path="/" element={<Home />} />
 							<Route path="/recipes" element={<Recipes />}>
 								<Route index element={<RecipeList />} />
+								<Route path="create" element={<CreateRecipeForm />} />
 							</Route>
 							<Route path="/users/login" element={<Login />} />
 							<Route path="/users/register" element={<Register />} />
