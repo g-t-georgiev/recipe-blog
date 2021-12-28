@@ -1,3 +1,44 @@
-.recipe-card {
+.recipe {
+    display: inline-block;
+    margin: 2% 1%;
+    padding: 2% 1%;
     width: 100%;
+}
+
+.recipe-image {
+    width: 10%;
+    display: flow-root;
+}
+
+.recipe-info {
+    padding: 3% 2%;
+    border-bottom: 1px solid black;
+}
+
+.recipe-title {
+    text-transform: uppercase;
+}
+
+@media screen and (min-width: 700px) {
+    .recipe {
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 900px) {
+    .recipe {
+        width: 30%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .recipe {
+        width: 20%;
+    }
+}
+
+@media screen and (min-width: 1500px) {
+    .recipe {
+        width: 15%;
+    }
 }
