@@ -2,12 +2,14 @@ import { useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 
 import useFetch from '../../../../hooks/useFetch';
+import { useAuthContext } from '../../../../contexts/AuthContext';
 
 import RecipeCard from '../RecipeCard/RecipeCard';
 
 import './RecipeList.css';
 
 function RecipeList(props) {
+    const { user } = useAuthContext();
     const [searchParams ] = useSearchParams();
     const path = useMemo(function () {
         let category = (props.category || searchParams.get('category')) ?? '';
@@ -18,7 +20,7 @@ function RecipeList(props) {
         return path;
     }, [props.category, searchParams]);
 
-    const recipes = useFetch('/data/recipes' + path);
+    const recipes = useFetch('/data/recipes' + path, user.isLoggedIn);
 
     return (
         <>
