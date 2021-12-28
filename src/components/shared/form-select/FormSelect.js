@@ -23,7 +23,7 @@ function FormSelect(props) {
             <div className="input-field">
                 <label htmlFor={props.id}>
                     <select 
-                        className={`form-select${selectState.touched ? ' no-float' : ''}`} 
+                        className={`form-select${selectState.touched || props.defaultValue ? ' no-float' : ''}`} 
                         name={props.name}
                         id={props.id}
                         defaultValue={props.defaultValue ?? 'default'}
