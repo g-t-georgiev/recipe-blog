@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
-
 import { Link, useSearchParams } from 'react-router-dom';
 
 import useFetch from '../../../../hooks/useFetch';
+
+import RecipeCard from '../RecipeCard/RecipeCard';
 
 function RecipeList(props) {
     const [ searchParams, setSearchParams ] = useSearchParams();
@@ -22,7 +23,7 @@ function RecipeList(props) {
             {
                 recipes.status === 'fetched'
                 ? Array.isArray(recipes.data) && recipes.data.length > 0
-                ? recipes.data.map(recipe => <li key={recipe._id}>{recipe.title}</li>)
+                ? recipes.data.map(recipe => <RecipeCard key={recipe._id} data={recipe} />)
                 : (
                     <>
                         <h3>No recipes to show</h3>
