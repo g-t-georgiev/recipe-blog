@@ -1,4 +1,5 @@
 import useFetch from '../../../../hooks/useFetch';
+import useRecipeActions from '../../../../hooks/useRecipeActions';
 
 import Form from '../../../shared/form/Form';
 import FormInput from '../../../shared/form-input/FormInput';
@@ -9,9 +10,10 @@ import { validationSchema } from '../constants';
 
 function CreateRecipeForm() {
     const categories = useFetch('/data/categories');
+    const action = useRecipeActions();
 
     return (
-        <Form name="recipeForm" title="Create new recipe" schema={validationSchema} redirect={true}>
+        <Form name="recipeForm" title="Create new recipe" action={action.create} schema={validationSchema} redirect={true}>
             <FormInput type="text" name="title" id="title" placeholder="Title" />
             <FormInput type="text" name="description" id="description" placeholder="Description" />
             {
