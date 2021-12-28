@@ -88,7 +88,7 @@ function Header() {
                                     )
                                     : (
                                         <>
-                                            <span className="dropdown-section-title">Hello, Guest!</span>
+                                            <span className="dropdown-section-title">Hello, guest!</span>
                                             <Link className="site-navigation-link" to="/users/login">Login</Link>
                                             <Link className="site-navigation-link" to="/users/register">Register</Link>
                                         </>
