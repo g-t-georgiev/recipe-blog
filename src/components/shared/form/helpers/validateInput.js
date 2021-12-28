@@ -1,4 +1,7 @@
 const checks = {
+    required: function (value, required) {
+        return required && value.length > 0;
+    },
     minLength: function (value, charCount) {
         return value.length >= charCount;
     },
@@ -7,6 +10,9 @@ const checks = {
     },
     match: function (value, regex) {
         return regex.test(value);
+    },
+    includes: function (value, arrayOfValues) {
+        return arrayOfValues.includes(value);
     }
 };
 
