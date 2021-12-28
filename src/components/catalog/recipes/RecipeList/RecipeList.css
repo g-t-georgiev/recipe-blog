@@ -1,9 +1,11 @@
 .recipe-list {
-    display: flow-root;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     padding: 5% 2%;
     margin-top: 15%;
     margin-bottom: 15%;
-    text-align: left;
 }
 
 .info-box {
@@ -21,10 +23,19 @@
     .recipe-list {
         margin-top: 7%;
         margin-bottom: 7%;
+        flex-direction: row;
     }
 }
 
 @media screen and (min-width: 900px) {
+    .recipe-list {
+        padding: 3% 1%;
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
     .recipe-list {
         padding: 3% 1%;
         margin-top: 5%;
