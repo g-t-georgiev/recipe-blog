@@ -16,6 +16,7 @@ import RecipeDetails from '../catalog/recipes/RecipeDetails/RecipeDetails';
 import EditRecipeForm from '../catalog/recipes/EditRecipeForm/EditRecipeForm';
 import DeleteRecipeForm from '../catalog/recipes/DeleteRecipeForm/DeleteRecipeForm';
 import MyRecipesList from '../catalog/recipes/MyRecipesList/MyRecipesList';
+import Favorites from '../catalog/recipes/Favorites/Favorites';
 
 function App() {
 	return (
@@ -40,7 +41,7 @@ function App() {
 								<Route path="register" element={<Register />} />
 								<Route path=":userId">
 									<Route path="recipes" element={<MyRecipesList />} />
-									<Route path="favorites" element={<RecipeList />} />
+									<Route path="favorites" element={<Favorites />} />
 								</Route>
 							</Route>
 						</Routes>
