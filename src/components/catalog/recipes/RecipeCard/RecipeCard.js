@@ -1,18 +1,22 @@
+import { Link } from 'react-router-dom';
+
 import './RecipeCard.css';
+
+import { formatName } from '../constants';
 
 function RecipeCard({ data }) {
     return (
         <div className="recipe">
-            <div className="recipe-info">
-                <div className="recipe-image">
-                    <img src={data.imageUrl} alt={data.title} />
-                </div>
-                <h4 className="recipe-title">{data.title}</h4>
-                <p className="recipe-category">{data.category[0].toUpperCase() + data.category.slice(1)}</p>
-                <p className="recipe-author">{data.author.username}</p>
-                <p>Rating: {data.reviewCount && data.rating.reduce((rating, review) => rating += review.rating, 0) / data.reviewCount}</p>
+            <div className="recipe-image">
+                <img src={data.imageUrl} alt={data.title} />
             </div>
-            <button className="recipe-details-button">Details</button>
+            <div className="recipe-info">
+                <h4 className="recipe-title">{data.title}</h4>
+                <p className="recipe-category">Category: {formatName(data.category)}</p>
+                <p className="recipe-author">Author: {data.author.username}</p>
+                <p>Rating: {data.reviewCount && data.rating.reduce((rating, review) => rating += review.rating, 0) / data.reviewCount} / 5</p>
+                <Link className="recipe-details-button" to={`/recipes/${data._id}`}>Details</Link>
+            </div>
         </div>
     );
 }
