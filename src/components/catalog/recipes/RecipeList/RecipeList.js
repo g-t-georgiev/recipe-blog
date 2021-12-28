@@ -8,7 +8,7 @@ import RecipeCard from '../RecipeCard/RecipeCard';
 import './RecipeList.css';
 
 function RecipeList(props) {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams ] = useSearchParams();
     const path = useMemo(function () {
         let category = (props.category || searchParams.get('category')) ?? '';
         // let page = (props.page || searchParams.get('page')) ?? '1';
@@ -19,7 +19,6 @@ function RecipeList(props) {
     }, [props.category, searchParams]);
 
     const recipes = useFetch('/data/recipes' + path);
-    console.log(recipes);
 
     return (
         <>
