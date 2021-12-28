@@ -18,7 +18,7 @@ const reducer = function (state, { type, payload }) {
             return { ...state, status: 'fetched', data: payload };
         }
         case 'FETCH_ERROR': {
-            return { ...state, status: 'error', data: payload };
+            return { ...state, status: 'error', error: payload };
         }
         default: {
             return state;
