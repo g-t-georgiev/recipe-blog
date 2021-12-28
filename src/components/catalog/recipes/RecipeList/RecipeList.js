@@ -19,6 +19,7 @@ function RecipeList(props) {
     }, [props.category, searchParams]);
 
     const recipes = useFetch('/data/recipes' + path);
+    console.log(recipes);
 
     return (
         <>
