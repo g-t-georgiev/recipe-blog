@@ -11,7 +11,7 @@ function useRecipeActions() {
         imageUrl = imageUrl.toLowerCase();
 
         await recipeService.create(title, description, category, imageUrl);
-        return () => redirectTo('/recipes');
+        return () => redirectTo('/recipes', { replace: true });
     }, [redirectTo]);
 
     const update = useCallback(async function (recipeId, { title, description, category, imageUrl }) {
@@ -20,7 +20,7 @@ function useRecipeActions() {
         imageUrl = imageUrl.toLowerCase();
         
         await recipeService.update(recipeId, title, description, category, imageUrl);
-        return () => redirectTo(`/recipes/${recipeId}`);
+        return () => redirectTo(`/recipes/${recipeId}`, { replace: true });
     }, [redirectTo]);
 
     const remove = useCallback(async function (recipeId) {
