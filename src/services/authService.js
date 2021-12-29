@@ -56,3 +56,23 @@ export const logout = async function () {
 
     return null;
 }
+
+export const auth = async function (userId, recipeId) {
+    const response = await fetch(apiUrl + `/users/${userId}/me`, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            [authHeaderName]: `Bearer ${getAccessToken()}`
+        },
+        body: JSON.stringify({ recipeId: recipeId })
+    });
+
+    if (!response.ok && response.status === 404) {
+        throw new Error('Connection error.');
+    } else if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+    }
+
+    return response.json();
+}
