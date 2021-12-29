@@ -4,7 +4,7 @@ import useFetch from '../../../../hooks/useFetch';
 
 import RecipeCard from '../RecipeCard/RecipeCard';
 
-import './Favorites.css';
+import '../RecipeList/RecipeList.css';
 
 function Favorites() {
     const { userId } = useParams();
