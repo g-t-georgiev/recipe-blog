@@ -17,6 +17,7 @@ import EditRecipeForm from '../catalog/recipes/EditRecipeForm/EditRecipeForm';
 import DeleteRecipeForm from '../catalog/recipes/DeleteRecipeForm/DeleteRecipeForm';
 import MyRecipesList from '../catalog/recipes/MyRecipesList/MyRecipesList';
 import Favorites from '../catalog/recipes/Favorites/Favorites';
+import ErrorPage from '../error/ErrorPage/ErrorPage';
 
 function App() {
 	return (
@@ -44,6 +45,7 @@ function App() {
 									<Route path="favorites" element={<Favorites />} />
 								</Route>
 							</Route>
+							<Route path="*" element={<ErrorPage />} />
 						</Routes>
 					</main>
 				</div>
