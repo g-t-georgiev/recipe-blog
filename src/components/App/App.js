@@ -18,6 +18,7 @@ import DeleteRecipeForm from '../catalog/recipes/DeleteRecipeForm/DeleteRecipeFo
 import MyRecipesList from '../catalog/recipes/MyRecipesList/MyRecipesList';
 import Favorites from '../catalog/recipes/Favorites/Favorites';
 import ErrorPage from '../error/ErrorPage/ErrorPage';
+import RouteGuard from '../shared/route-guard/RouteGuard';
 
 function App() {
 	return (
@@ -32,17 +33,51 @@ function App() {
 								<Route index element={<RecipeList />} />
 								<Route path=":recipeId">
 									<Route index element={<RecipeDetails />} />
-									<Route path="edit" element={<EditRecipeForm />} />
-									<Route path="delete" element={<DeleteRecipeForm />} />
+									<Route
+										path="edit"
+										element={
+											<RouteGuard isPrivate={true}>
+												<EditRecipeForm />
+											</RouteGuard>
+										} />
+									<Route
+										path="delete"
+										element={
+											<RouteGuard isPrivate={true}>
+												<DeleteRecipeForm />
+											</RouteGuard>
+										} />
 								</Route>
-								<Route path="create" element={<CreateRecipeForm />} />
+								<Route
+									path="create"
+									element={
+										<RouteGuard isPrivate={true}>
+											<CreateRecipeForm />
+										</RouteGuard>
+									} />
 							</Route>
 							<Route path="users">
-								<Route path="login" element={<Login />} />
-								<Route path="register" element={<Register />} />
+								<Route path="login" element={
+									<RouteGuard isPrivate={false}>
+										<Login />
+									</RouteGuard>
+								} />
+								<Route path="register" element={
+									<RouteGuard isPrivate={false}>
+										<Register />
+									</RouteGuard>
+								} />
 								<Route path=":userId">
-									<Route path="recipes" element={<MyRecipesList />} />
-									<Route path="favorites" element={<Favorites />} />
+									<Route path="recipes" element={
+										<RouteGuard isPrivate={true}>
+											<MyRecipesList />
+										</RouteGuard>
+									} />
+									<Route path="favorites" element={
+										<RouteGuard isPrivate={true}>
+											<Favorites />
+										</RouteGuard>
+									} />
 								</Route>
 							</Route>
 							<Route path="*" element={<ErrorPage />} />
