@@ -51,10 +51,10 @@ function RecipeList(props) {
                                 </section>
                             )
                             : (
-                                <>
+                                <section className="info-box">
                                     <h3>Oops, something went wrong while getting recipes data.</h3>
                                     <p>Issue: {recipes.error}</p>
-                                </>
+                                </section>
                             )
 
                 }
