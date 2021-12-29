@@ -4,6 +4,7 @@
 }
 
 .recipe-details-image {
+    position: relative;
     display: flow-root;
     width: 100%;
 }
