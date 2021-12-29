@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
 import { useFormState } from '../../../hooks/useFormState';
 
@@ -9,6 +9,7 @@ import './Form.css';
 
 function Form({ name, title = 'Fill in the form below', schema, action, redirect, children }) {
     const { formState, updateFormState } = useFormState();
+    const formRef = useRef();
 
     const submitHandler = useCallback(async function (e) {
         e.preventDefault();
@@ -40,9 +41,17 @@ function Form({ name, title = 'Fill in the form below', schema, action, redirect
             });
     }, [action, schema, redirect, updateFormState]);
 
+    useEffect(function () {
+        let form = formRef.current;
+        form?.addEventListener('submit', submitHandler);
+        return function () {
+            form?.removeEventListener('submit', submitHandler);
+        }
+    }, [submitHandler]);
+
     return (
         <FormContext.Provider value={{ schema, formState }}>
-            <form className="form" name={name} autoComplete="off" onSubmit={submitHandler}>
+            <form className="form" name={name} autoComplete="off" ref={formRef} onSubmit={submitHandler}>
                 <legend className="form-title">{title}</legend>
                 {
                     (!formState.loading && formState.submitted && formState.response)
