@@ -24,7 +24,11 @@ function useAuthActions() {
         return () => redirectTo('/');
     }, [signOut, redirectTo]);
 
-    return { login, register, logout };
+    const auth = useCallback(function (userId, recipeId) {
+        return authService.auth(userId, recipeId);
+    }, []);
+
+    return { auth, login, register, logout };
 }
 
 export default useAuthActions;
