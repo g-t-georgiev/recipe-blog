@@ -44,9 +44,10 @@ function Header() {
             <h2 className="site-header-title">
                 Food Blog
             </h2>
+
             <nav className="site-navigation">
                 <ToggleNavButton openNavHandler={openNav} />
-                <section className={`site-navigation-links ${navState.opened ? 'opened' : 'closed'}`} onMouseUp={closeNav}>
+                <section className={`site-navigation-links ${navState.opened ? 'opened' : 'closed'}`} onClick={closeNav}>
                     <Link className="site-navigation-link" to="/">Home</Link>
 
                     <span className="dropdown">
