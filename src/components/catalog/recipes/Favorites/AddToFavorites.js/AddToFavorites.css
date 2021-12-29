@@ -1,0 +1,12 @@
+.add-to-favorites-button {
+    display: inline-block;
+    width: 15%;
+    padding: 3%;
+    border: 1px solid black;
+    background-color: transparent;
+    border-radius: 50%;
+}
+
+.add-to-favorites-button {
+    color: red;
+}
