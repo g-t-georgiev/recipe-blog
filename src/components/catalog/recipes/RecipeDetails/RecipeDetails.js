@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import useFetch from "../../../../hooks/useFetch";
 import { useAuthContext } from "../../../../contexts/AuthContext";
 
+import AddToFavorites from "../Favorites/AddToFavorites.js/AddToFavorites";
+
 import './RecipeDetails.css';
 
 function RecipeDetails() {
@@ -30,6 +32,7 @@ function RecipeDetails() {
     return (
         <section className="recipe-details">
             <div className="recipe-details-image">
+                { recipe.data.author?._id.toString() !== user.id && <AddToFavorites /> }
                 <img src={recipe.data.imageUrl} alt={recipe.data.title} />
             </div>
             <div className="recipe-details-header">
