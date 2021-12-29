@@ -1,8 +1,4 @@
 .recipe {
-    display: inline-block;
-    flex: 1 1 100%;
-    width: 100%;
-    margin-bottom: 15%;
     border: 1px solid black;
     text-align: left;
     font-size: .9rem;
@@ -17,7 +13,6 @@
 }
 
 .recipe-info {
-    height: 100%;
     padding: 2% 3%;
 }
 
@@ -36,77 +31,38 @@
 
 .recipe-details-button {
     display: block;
-    width: 45%;
+    width: 100%;
     border: 0;
-    margin: 5% auto 0;
+    margin-top: 5%;
     padding: 3% 2%;
     background-color: black;
     color: white;
     text-align: center;
 }
 
-@media screen and (min-width: 400px) {
+@media screen and (min-width: 40em) {
     .recipe {
-        width: 80%;
-        margin-left: 5%;
-        margin-right: 5%;
-        margin-bottom: 10%;
-    }
-
-    .recipe-details-button {
-        width: 65%;
-        padding: 3% 2%;
+        flex: 0 1 calc(50% - 1em);
     }
 }
 
-@media screen and (min-width: 500px) {
-    .recipe {
-        width: 70%;
-        margin-left: 5%;
-        margin-right: 5%;
-        margin-bottom: 10%;
-    }
-
-    .recipe-details-button {
-        width: 65%;
-        padding: 3% 2%;
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .recipe {
-        width: 70%;
-        margin-left: 5%;
-        margin-right: 5%;
-        margin-bottom: 10%;
-    }
-
-    .recipe-details-button {
-        width: 75%;
-        padding: 3% 2%;
-    }
-}
-
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 60em) {
     .recipe {
         position: relative;
-        flex: 2 1 65%;
-        width: 65%;
-        margin-left: 5%;
-        margin-right: 5%;
-        margin-bottom: 5%;
-    }
-
-    .recipe-info {
-        display: none;
-        width: 100%;
-        background-color: rgba(245, 245, 245, .8);
-        transition: all 0.3s;
+        flex: 0 1 calc(25% - 1em);
     }
 
     .recipe:hover {
         border-color: rgba(0, 0, 0, .3);
     }
+
+    .recipe-info {
+        display: none;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(245, 245, 245, .8);
+    }
+
 
     .recipe:hover .recipe-info {
         display: block;
@@ -118,52 +74,5 @@
         position: absolute;
         bottom: 0;
         left: 0;
-        width: 100%;
-        padding: 5% 3%;
-    }
-}
-
-@media screen and (min-width: 900px) {
-    .recipe {
-        width: 65%;
-        margin-left: 5%;
-        margin-right: 5%;
-        margin-bottom: 5%;
-        font-size: .8rem;
-    }
-}
-
-@media screen and (min-width: 1150px) {
-    .recipe {
-        width: 55%;
-        margin-left: 5%;
-        margin-right: 5%;
-        margin-bottom: 5%;
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .recipe {
-        width: 35%;
-        margin-left: 4%;
-        margin-right: 4%;
-        margin-bottom: 3%;
-        font-size: .9rem;
-    }
-}
-
-@media screen and (min-width: 1400px) {
-    .recipe {
-        width: 25%;
-        margin-left: 3%;
-        margin-right: 3%;
-    }
-}
-
-@media screen and (min-width: 1700px) {
-    .recipe {
-        width: 15%;
-        margin-left: 2%;
-        margin-right: 2%;
     }
 }
