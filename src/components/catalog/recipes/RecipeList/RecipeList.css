@@ -1,6 +1,7 @@
 .recipe-list {
     display: flex;
     align-items: center;
+    align-content: center;
     justify-content: center;
     flex-direction: column;
     padding: 5% 2%;
@@ -19,11 +20,10 @@
     }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 600px) {
     .recipe-list {
         margin-top: 7%;
         margin-bottom: 7%;
-        flex-direction: row;
     }
 }
 
@@ -40,10 +40,19 @@
         padding: 3% 1%;
         margin-top: 5%;
         margin-bottom: 5%;
+        flex-direction: row;
     }
 }
 
 @media screen and (min-width: 1400px) {
+    .recipe-list {
+        padding: 2% 1%;
+        margin-top: 3%;
+        margin-bottom: 3%;
+    }
+}
+
+@media screen and (min-width: 1600px) {
     .recipe-list {
         padding: 2% 1%;
         margin-top: 3%;
