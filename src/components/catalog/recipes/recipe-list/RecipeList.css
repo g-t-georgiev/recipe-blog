@@ -1,0 +1,22 @@
+.recipe-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* padding: 5% 2%; */
+}
+
+.info-box {
+    width: 100%;
+}
+
+@media screen and (min-width: 40em) {
+    .recipe-list {
+        flex-direction: column;
+    }
+}
+
+@media screen and (min-width: 60em) {
+    .recipe-list {
+        flex-direction: row;
+    }
+}
