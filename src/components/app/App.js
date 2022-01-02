@@ -78,29 +78,33 @@ function App() {
 
 								<Route path="users">
 									<Route path="login" element={
-										<RouteGuard isPrivate={false}>
-											<Login />
-										</RouteGuard>
-									} />
+											<RouteGuard isPrivate={false}>
+												<Login />
+											</RouteGuard>
+										} 
+									/>
 
 									<Route path="register" element={
-										<RouteGuard isPrivate={false}>
-											<Register />
-										</RouteGuard>
-									} />
+											<RouteGuard isPrivate={false}>
+												<Register />
+											</RouteGuard>
+										} 
+									/>
 
 									<Route path=":userId">
 										<Route path="recipes" element={
-											<RouteGuard isPrivate={true}>
-												<MyRecipesList />
-											</RouteGuard>
-										} />
+												<RouteGuard isPrivate={true}>
+													<MyRecipesList />
+												</RouteGuard>
+											} 
+										/>
 
 										<Route path="favorites" element={
-											<RouteGuard isPrivate={true}>
-												<Favorites />
-											</RouteGuard>
-										} />
+												<RouteGuard isPrivate={true}>
+													<Favorites />
+												</RouteGuard>
+											} 
+										/>
 									</Route>
 								</Route>
 
