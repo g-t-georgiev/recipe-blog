@@ -11,11 +11,34 @@ function Login() {
     const authActions = useAuthActions();
 
     return (
-        <Form name="loginForm" title="Sign in to your account" schema={getValidationSchema('loginForm')} action={authActions.login} redirect={true}>
-            <FormInput type="text" name="email" id="email" placeholder="Email" />
-            <FormInput type="password" name="password" id="password" placeholder="Password" />
+        <Form 
+            name="loginForm" 
+            title="Sign in to your account" 
+            schema={getValidationSchema('loginForm')} 
+            action={authActions.login} 
+            redirect={true}
+        >
+
+            <FormInput 
+                type="text" 
+                name="email" 
+                id="email" 
+                placeholder="Email" 
+            />
+
+            <FormInput 
+                type="password" 
+                name="password" 
+                id="password" 
+                placeholder="Password" 
+            />
+
             <FormButton text="Sign in" />
-            <FormFooter span={{ text: 'Not a member yet?' }} link={{ text: 'Sign up.', to: '/users/register' }} />
+
+            <FormFooter 
+                span={{ text: 'Not a member yet?' }} 
+                link={{ text: 'Sign up.', to: '/users/register' }} 
+            />
         </Form>
     );
 }

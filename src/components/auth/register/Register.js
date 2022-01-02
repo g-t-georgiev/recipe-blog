@@ -11,12 +11,41 @@ function Register() {
     const authActions = useAuthActions();
 
     return (
-        <Form name="registerForm" title="Create new account" schema={getValidationSchema('registerForm')} action={authActions.register} redirect={true}>
-            <FormInput type="text" name="username" id="username" placeholder="Username" />
-            <FormInput type="text" name="email" id="email" placeholder="Email" />
-            <FormInput type="password" name="password" id="password" placeholder="Password" />
+        <Form 
+            name="registerForm" 
+            title="Create new account" 
+            schema={getValidationSchema('registerForm')} 
+            action={authActions.register} 
+            redirect={true}
+        >
+
+            <FormInput 
+                type="text" 
+                name="username" 
+                id="username" 
+                placeholder="Username" 
+            />
+
+            <FormInput 
+                type="text" 
+                name="email" 
+                id="email" 
+                placeholder="Email" 
+            />
+
+            <FormInput 
+                type="password" 
+                name="password" 
+                id="password" 
+                placeholder="Password" 
+            />
+
             <FormButton text="Sign up" />
-            <FormFooter span={{ text: 'Already have an account?' }} link={{ text: 'Sign in.', to: '/users/login' }} />
+
+            <FormFooter 
+                span={{ text: 'Already have an account?' }} 
+                link={{ text: 'Sign in.', to: '/users/login' }} 
+            />
         </Form>
     );
 }
