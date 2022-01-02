@@ -6,10 +6,12 @@ import './Header.css';
 import { useAuthContext } from '../../contexts/AuthContext';
 import useFetch from '../../hooks/useFetch';
 
-import ToggleNavButton from "./ToggleNavButton/ToggleNavButton";
-import SignOutButton from './SignOutButton/SignOutButton';
+import ToggleNavButton from "./toggle-nav-button/ToggleNavButton";
+import SignOutButton from './signout-button/SignOutButton';
 
-const initialNavState = { opened: true };
+import formatName from '../../helpers/formatName';
+
+const initialNavState = { opened: false };
 
 function Header() {
     const [navState, setNavState] = useState(initialNavState);
@@ -58,7 +60,17 @@ function Header() {
                             {
                                 categories.status === 'fetched'
                                 ? Array.isArray(categories.data) && categories.data.length > 0
-                                ? categories.data.map(category => <Link key={category._id} className="site-navigation-link" to={`/recipes?category=${category.title.toLowerCase()}`}>{category.title}</Link>)
+                                ? categories.data.map(
+                                    category => (
+                                        <Link 
+                                            key={category._id} 
+                                            className="site-navigation-link" 
+                                            to={`/recipes?category=${category.title.toLowerCase()}`}
+                                        >
+                                            {formatName(category.title)}
+                                        </Link>
+                                    )
+                                )
                                 : <span className="site-navigation-link default-text">No categories</span>
                                 : <span className="site-navigation-link default-text">
                                     {

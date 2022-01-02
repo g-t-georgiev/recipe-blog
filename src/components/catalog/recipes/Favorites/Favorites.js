@@ -2,9 +2,9 @@ import { Link, useParams } from 'react-router-dom';
 
 import useFetch from '../../../../hooks/useFetch';
 
-import RecipeCard from '../RecipeCard/RecipeCard';
+import RecipeCard from '../recipe-card/RecipeCard';
 
-import '../RecipeList/RecipeList.css';
+import '../recipe-list/RecipeList.css';
 
 function Favorites() {
     const { userId } = useParams();
