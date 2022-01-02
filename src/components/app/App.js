@@ -30,26 +30,40 @@ function App() {
 					<Content>
 						<Routes>
 							<Route path="/" element={<Section />}>
-								<Route index element={<Home />} />
+								<Route 
+									index 
+									element={<Home />} 
+								/>
+
 								<Route path="recipes" element={<Recipes />}>
-									<Route index element={<RecipeList />} />
+									<Route 
+										index 
+										element={<RecipeList />} 
+									/>
 
 									<Route path=":recipeId" element={<RecipeContextProvider />}>
-										<Route index element={<RecipeDetails />} />
+										<Route 
+											index 
+											element={<RecipeDetails />} 
+										/>
+
 										<Route
 											path="edit"
 											element={
 												<RouteGuard isPrivate={true}>
 													<EditRecipeForm />
 												</RouteGuard>
-											} />
+											} 
+										/>
+
 										<Route
 											path="delete"
 											element={
 												<RouteGuard isPrivate={true}>
 													<DeleteRecipeForm />
 												</RouteGuard>
-											} />
+											} 
+										/>
 									</Route>
 
 									<Route
@@ -58,7 +72,8 @@ function App() {
 											<RouteGuard isPrivate={true}>
 												<CreateRecipeForm />
 											</RouteGuard>
-										} />
+										} 
+									/>
 								</Route>
 
 								<Route path="users">
@@ -89,7 +104,10 @@ function App() {
 									</Route>
 								</Route>
 
-								<Route path="*" element={<Page404 />} />
+								<Route 
+									path="*" 
+									element={<Page404 />} 
+								/>
 							</Route>
 						</Routes>
 					</Content>
