@@ -1,11 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
 function Recipes() {
-    return (
-        <section>
-            <Outlet />
-        </section>
-    );
+    return <Outlet />;
 }
 
 export default Recipes;
