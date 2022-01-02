@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function ErrorPage(props) {
+function ErrorPage() {
     return (
         <section>
             <h2>Ooops, something went wrong...</h2>
