@@ -32,8 +32,3 @@ export const validationSchema = {
         }
     }
 };
-
-export const formatName = function (category) {
-    if (!category) return;
-    return category[0].toUpperCase() + category.slice(1);
-}
