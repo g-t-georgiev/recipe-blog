@@ -18,7 +18,7 @@ import EditRecipeForm from '../catalog/recipes/edit-recipe-form/EditRecipeForm';
 import DeleteRecipeForm from '../catalog/recipes/delete-recipe-form/DeleteRecipeForm';
 import MyRecipesList from '../catalog/recipes/my-recipes-list/MyRecipesList';
 import Favorites from '../catalog/recipes/favorites/Favorites';
-import ErrorPage from '../error/error-page/ErrorPage';
+import Page404 from '../404/Page404';
 import RouteGuard from '../shared/route-guard/RouteGuard';
 
 function App() {
@@ -89,7 +89,7 @@ function App() {
 									</Route>
 								</Route>
 
-								<Route path="*" element={<ErrorPage />} />
+								<Route path="*" element={<Page404 />} />
 							</Route>
 						</Routes>
 					</Content>
