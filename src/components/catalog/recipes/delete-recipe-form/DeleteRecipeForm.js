@@ -33,12 +33,56 @@ function DeleteRecipeForm() {
     }
 
     return (
-        <Form name="recipeForm" title="Delete recipe" action={action.remove.bind(null, recipeId)} schema={validationSchema} redirect={true}>
-            <FormInput type="text" name="title" id="title" disabled={true} placeholder="Title" defaultValue={recipe.data.title} />
-            <FormInput type="text" name="description" id="description" disabled={true} placeholder="Description" defaultValue={recipe.data.description} />
-            <FormInput type="text" name="category" id="category" placeholder="Category" disabled={true} defaultValue={formatName(recipe.data.category)} />
-            <FormInput type="text" name="imageUrl" id="image" disabled={true} defaultValue={recipe.data.imageUrl} placeholder="Image" />
+        <Form 
+            name="recipeForm" 
+            title="Delete recipe" 
+            action={action.remove.bind(null, recipeId)} 
+            schema={validationSchema} 
+            redirect={true}
+        >
+
+            <FormInput 
+                type="text" 
+                name="title" 
+                id="title" 
+                disabled={true} 
+                placeholder="Title" 
+                defaultValue={
+                    formatName(recipe.data.title)
+                } 
+            />
+
+            <FormInput 
+                type="text" 
+                name="description" 
+                id="description" 
+                disabled={true} 
+                placeholder="Description" 
+                defaultValue={recipe.data.description} 
+            />
+
+            <FormInput 
+                type="text" 
+                name="category" 
+                id="category" 
+                placeholder="Category" 
+                disabled={true} 
+                defaultValue={
+                    formatName(recipe.data.category)
+                } 
+            />
+
+            <FormInput 
+                type="text" 
+                name="imageUrl" 
+                id="image" 
+                disabled={true} 
+                defaultValue={recipe.data.imageUrl} 
+                placeholder="Image" 
+            />
+
             <FormButton text="Delete" />
+            
         </Form>
     )
 }
