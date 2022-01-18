@@ -59,7 +59,9 @@ function EditRecipeForm() {
                 name="title" 
                 id="title" 
                 placeholder="Title" 
-                defaultValue={recipe.data.title} 
+                defaultValue={
+                    formatName(recipe.data.title)
+                } 
             />
 
             <FormInput 
