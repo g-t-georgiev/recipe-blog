@@ -20,7 +20,7 @@ function useRecipeActions() {
         imageUrl = imageUrl.toLowerCase();
         
         await recipeService.update(recipeId, title, description, category, imageUrl);
-        return () => redirectTo(`/recipes/${recipeId}`, { replace: true, state: true });
+        return () => redirectTo(`/recipes/${recipeId}`, { replace: true, state: { updated: true } });
     }, [redirectTo]);
 
     const remove = useCallback(async function (recipeId) {
