@@ -26,7 +26,7 @@ const reducer = function (state, { type, payload }) {
     }
 };
 
-export default function useFetch(path = '', isAuthenticated = false, cacheData = true, resetted = false) {
+export default function useFetch(path = '', isAuthenticated = false, cacheData = true, hasUpdated = false) {
     const cache = useRef({});
     const [ state, dispatch ] = useReducer(reducer, initialState);
 
@@ -76,7 +76,7 @@ export default function useFetch(path = '', isAuthenticated = false, cacheData =
             abortRequest = true;
             abortController.abort();
         };
-    }, [path, isAuthenticated, cacheData, resetted]);
+    }, [path, isAuthenticated, cacheData, hasUpdated]);
 
     return state;
 }
