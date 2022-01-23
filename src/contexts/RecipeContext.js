@@ -12,8 +12,8 @@ export const useRecipeContext = function () {
 export const RecipeContextProvider = function () {
     const { recipeId } = useParams();
     const location = useLocation();
-    const resetted = Boolean(location.state);
-    const fetchData = useFetch(`/data/recipes/${recipeId}`, false, false, resetted);
+    const hasUpdated = location.state?.updated ?? false;
+    const fetchData = useFetch(`/data/recipes/${recipeId}`, false, false, hasUpdated);
     const recipe = fetchData;
 
     return (
