@@ -1,6 +1,8 @@
 import { Outlet } from 'react-router-dom';
 
-function Section({ children }) {
+import './Section.css';
+
+function Section() {
     return (
         <section>
             <Outlet />
